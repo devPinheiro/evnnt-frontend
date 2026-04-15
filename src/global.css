@@ -1,0 +1,97 @@
+/* Evvnt dashboard tokens — extracted from evvnt-dashboard-v2.html; aligned with EHR-style token naming (semantic + scale). */
+@import "tailwindcss";
+
+@theme {
+  /* Brand purple scale */
+  --color-evvnt-ink: #1a0933;
+  --color-evvnt-deep: #2d0f6b;
+  --color-evvnt-core: #4b1fa8;
+  --color-evvnt-vivid: #7c3aed;
+  --color-evvnt-soft: #a78bfa;
+  --color-evvnt-muted: #c4b5fd;
+  --color-evvnt-tint: #ede9fe;
+  --color-evvnt-mist: #f5f3ff;
+
+  /* Neutrals (design n50–n700) */
+  --color-evvnt-n50: #f9fafb;
+  --color-evvnt-n100: #f3f4f6;
+  --color-evvnt-n200: #e5e7eb;
+  --color-evvnt-n300: #d1d5db;
+  --color-evvnt-n400: #9ca3af;
+  --color-evvnt-n500: #6b7280;
+  --color-evvnt-n700: #374151;
+
+  /* Semantic */
+  --color-evvnt-success: #059669;
+  --color-evvnt-success-subtle: #ecfdf5;
+  --color-evvnt-success-light: #a7f3d0;
+  --color-evvnt-warn: #d97706;
+  --color-evvnt-warn-subtle: #fffbeb;
+  --color-evvnt-warn-light: #fcd34d;
+  --color-evvnt-danger: #dc2626;
+  --color-evvnt-danger-subtle: #fef2f2;
+  --color-evvnt-danger-light: #fecaca;
+
+  /* Sidebar glow (radial) */
+  --color-evvnt-sidebar-glow: rgb(124 58 237 / 28%);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-evvnt-sm: 8px;
+  --radius-evvnt-md: 9px;
+  --radius-evvnt-lg: 10px;
+  --radius-evvnt-xl: 12px;
+  --radius-evvnt-2xl: 13px;
+  --radius-evvnt-card: 14px;
+
+  --width-evvnt-sidebar: 232px;
+}
+
+/* Gradients referenced by components (kept outside @theme for compatibility). */
+:root {
+  --background-image-evvnt-banner-1: linear-gradient(145deg, #1a0933 0%, #4b1fa8 65%, #7c3aed 100%);
+  --background-image-evvnt-banner-2: linear-gradient(145deg, #0f2942 0%, #1d5b8a 60%, #2e7fb5 100%);
+  --background-image-evvnt-banner-3: linear-gradient(145deg, #1a2e0f 0%, #2d6b1f 60%, #3ea82a 100%);
+  --background-image-evvnt-banner-new: linear-gradient(
+    145deg,
+    #2c1a0f 0%,
+    #6b3b1f 60%,
+    #a86030 100%
+  );
+  --background-image-evvnt-banner-5: linear-gradient(145deg, #1c0a3b 0%, #5b1fa8 60%, #8b3aed 100%);
+  --background-image-evvnt-plan: linear-gradient(135deg, #2d0f6b 0%, #4b1fa8 100%);
+}
+
+@layer base {
+  html {
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-evvnt-mist);
+    color: var(--color-evvnt-ink);
+    font-family: var(--font-sans);
+  }
+
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: var(--color-evvnt-muted);
+  }
+}
