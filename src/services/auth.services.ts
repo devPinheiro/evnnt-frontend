@@ -2,7 +2,7 @@ import { http } from "@/lib/http";
 import { useAuthStore } from "@/store/auth.store";
 import type { AuthUser } from "@/store/auth.store";
 import endpoints from "@endpoints";
-import { type ApiSuccess, unwrap } from "@types";
+import { useMutationData, useQueryData } from "@hooks";
 
 export type MeUser = AuthUser & {
   emailVerified?: boolean;
@@ -12,55 +12,54 @@ export type MeUser = AuthUser & {
   createdAt?: string;
 };
 
-export async function login(input: { orgId: string; email: string; password: string }) {
-  const { data } = await http.post<
-    ApiSuccess<{
+export const useLogin = () =>
+  useMutationData<
+    {
       user: AuthUser & { emailVerified?: boolean };
       tokens: { accessToken: string; refreshToken: string };
-    }>
-  >(endpoints.auth.login, input);
-  return unwrap(data);
-}
+    },
+    { orgId: string; email: string; password: string }
+  >({
+    url: endpoints.auth.login,
+  });
 
-export async function signup(input: {
-  orgName: string;
-  email: string;
-  password: string;
-  name?: string;
-}) {
-  const { data } = await http.post<
-    ApiSuccess<{
+export const useSignup = () =>
+  useMutationData<
+    {
       organisation: { id: string; name: string };
       user: AuthUser & { emailVerified?: boolean; pendingEmail?: string | null };
       tokens: { accessToken: string; refreshToken: string };
-    }>
-  >(endpoints.auth.signup, input);
-  return unwrap(data);
-}
+    },
+    { orgName: string; email: string; password: string; name?: string }
+  >({
+    url: endpoints.auth.signup,
+  });
 
-export async function fetchMe() {
-  const { data } = await http.get<ApiSuccess<{ user: MeUser }>>(endpoints.auth.me);
-  return unwrap(data);
-}
+export const useMe = (enabled: boolean) =>
+  useQueryData<{ user: MeUser }>({
+    url: endpoints.auth.me,
+    queryKey: ["me"],
+    enabled,
+  });
 
-/** Rotate JWT pair — Evvnt `POST /api/v1/auth/refresh`. */
-export async function refreshSession(refreshToken: string) {
-  const { data } = await http.post<
-    ApiSuccess<{ tokens: { accessToken: string; refreshToken: string } }>
-  >(endpoints.auth.refresh, { refreshToken });
-  return unwrap(data);
-}
+export const useLogout = () =>
+  useMutationData<object, { refreshToken: string }>({
+    url: endpoints.auth.logout,
+    errorMessage: "Failed to sign out",
+  });
 
 /**
  * Clear local session then revoke refresh token on the Evvnt API (`POST /api/v1/auth/logout`).
+ * (Kept here because it’s “service-level” behavior, not UI.)
  */
 export async function logoutSession(): Promise<void> {
   const refreshToken = useAuthStore.getState().refreshToken;
   useAuthStore.getState().logout();
   if (!refreshToken) return;
   try {
+    // Session already cleared locally; ignore network / already-revoked errors.
     await http.post(endpoints.auth.logout, { refreshToken });
   } catch {
-    // Session already cleared locally; ignore network / already-revoked errors.
+    // no-op
   }
 }

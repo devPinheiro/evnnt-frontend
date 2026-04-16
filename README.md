@@ -32,7 +32,7 @@ Open [http://localhost:3000](http://localhost:3000). Point `VITE_API_URL` at the
 - `src/routes/` — file-based routes (`routeTree.gen.ts` is generated on build/dev). Authenticated UI lives under `routes/(authenticated)/_appLayout/` (same idea as EHR’s `/(authenticated)/_appLayout`).
 - `src/services/` — API calls (Evvnt `{ ok, data }` envelope).
 - `src/store/` — Zustand stores (`evvnt-auth` persisted); import via `@store`.
-- `src/lib/http.ts` — Axios instance + Bearer token + 401 → logout.
+- `src/lib/http.ts` — Axios instance: **Bearer** on API calls; **no Bearer** on `POST /auth/login`, `/auth/signup`, `/auth/refresh`. On **401**, tries **`POST /auth/refresh`** once, updates tokens via `replaceTokens`, retries the request; otherwise clears session and redirects to `/login` (except when already on `/login` or `/signup`).
 - `src/data/` — static/demo datasets and shared constants (e.g. dashboard demo content).
 - `src/hooks/` — shared hooks (`@hooks`).
 - `src/types/` — shared TypeScript types (`@types`).

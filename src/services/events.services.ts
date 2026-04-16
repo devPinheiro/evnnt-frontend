@@ -1,6 +1,5 @@
-import { http } from "@/lib/http";
 import endpoints from "@endpoints";
-import { type ApiSuccess, unwrap } from "@types";
+import { useQueryData } from "@hooks";
 
 /** Mirrors Evvnt Prisma `Event` JSON (dates are ISO strings over the wire). */
 export type EventRow = {
@@ -22,7 +21,8 @@ export type EventRow = {
   updatedAt?: string;
 };
 
-export async function listEvents() {
-  const { data } = await http.get<ApiSuccess<{ events: EventRow[] }>>(endpoints.events.list);
-  return unwrap(data).events;
-}
+export const useListEvents = () =>
+  useQueryData<{ events: EventRow[] }>({
+    url: endpoints.events.list,
+    queryKey: ["events"],
+  });

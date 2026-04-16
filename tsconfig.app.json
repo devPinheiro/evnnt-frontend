@@ -31,8 +31,11 @@
       "@store/*": ["./src/store/*"],
       "@types": ["./src/types/index.ts"],
       "@types/*": ["./src/types/*"],
+      "@endpoints": ["./src/lib/endpoints.ts"],
       "@schemas": ["./src/schemas/index.ts"],
-      "@schemas/*": ["./src/schemas/*"]
+      "@schemas/*": ["./src/schemas/*"],
+      "@pages": ["./src/pages/index.ts"],
+      "@pages/*": ["./src/pages/*"]
     }
   },
   "include": ["src"]

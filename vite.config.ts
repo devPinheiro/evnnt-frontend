@@ -20,6 +20,8 @@ export default defineConfig({
       "@store": r("store/index.ts"),
       "@types": r("types/index.ts"),
       "@schemas": r("schemas"),
+      "@pages": r("pages"),
+      "@endpoints": r("lib/endpoints.ts"),
     },
   },
   server: {
