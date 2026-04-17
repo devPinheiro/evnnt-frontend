@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authenticatedAppLayoutRouteImport } from './routes/(authenticated)/_appLayout'
 import { Route as authenticatedAppLayoutEventsIndexRouteImport } from './routes/(authenticated)/_appLayout/events/index'
+import { Route as authenticatedAppLayoutEventsPlannerRouteImport } from './routes/(authenticated)/_appLayout/events/planner'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -40,17 +41,25 @@ const authenticatedAppLayoutEventsIndexRoute =
     path: '/events/',
     getParentRoute: () => authenticatedAppLayoutRoute,
   } as any)
+const authenticatedAppLayoutEventsPlannerRoute =
+  authenticatedAppLayoutEventsPlannerRouteImport.update({
+    id: '/events/planner',
+    path: '/events/planner',
+    getParentRoute: () => authenticatedAppLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/events': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRoutesById {
@@ -59,19 +68,21 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/(authenticated)/_appLayout': typeof authenticatedAppLayoutRouteWithChildren
+  '/(authenticated)/_appLayout/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/(authenticated)/_appLayout/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/events/'
+  fullPaths: '/' | '/login' | '/signup' | '/events/planner' | '/events/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/events'
+  to: '/' | '/login' | '/signup' | '/events/planner' | '/events'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/signup'
     | '/(authenticated)/_appLayout'
+    | '/(authenticated)/_appLayout/events/planner'
     | '/(authenticated)/_appLayout/events/'
   fileRoutesById: FileRoutesById
 }
@@ -119,15 +130,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAppLayoutEventsIndexRouteImport
       parentRoute: typeof authenticatedAppLayoutRoute
     }
+    '/(authenticated)/_appLayout/events/planner': {
+      id: '/(authenticated)/_appLayout/events/planner'
+      path: '/events/planner'
+      fullPath: '/events/planner'
+      preLoaderRoute: typeof authenticatedAppLayoutEventsPlannerRouteImport
+      parentRoute: typeof authenticatedAppLayoutRoute
+    }
   }
 }
 
 interface authenticatedAppLayoutRouteChildren {
+  authenticatedAppLayoutEventsPlannerRoute: typeof authenticatedAppLayoutEventsPlannerRoute
   authenticatedAppLayoutEventsIndexRoute: typeof authenticatedAppLayoutEventsIndexRoute
 }
 
 const authenticatedAppLayoutRouteChildren: authenticatedAppLayoutRouteChildren =
   {
+    authenticatedAppLayoutEventsPlannerRoute:
+      authenticatedAppLayoutEventsPlannerRoute,
     authenticatedAppLayoutEventsIndexRoute:
       authenticatedAppLayoutEventsIndexRoute,
   }

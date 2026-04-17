@@ -1,3 +1,4 @@
+import { Progress } from "@ui/progress";
 import { ArrowRight } from "lucide-react";
 
 type PlanWidgetProps = {
@@ -23,7 +24,7 @@ export function PlanWidget({
 }: PlanWidgetProps) {
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-evvnt-2xl p-4"
+      className="relative shrink-0 overflow-hidden rounded-evvnt-2xl p-4 shadow-[0_4px_20px_-6px_rgb(45_15_107_/_35%)]"
       style={{ backgroundImage: "var(--background-image-evvnt-plan)" }}
     >
       <div
@@ -54,8 +55,12 @@ export function PlanWidget({
           </div>
         </div>
 
-        <div className="mb-1.5 mt-2 h-1 overflow-hidden rounded-sm bg-white/15">
-          <div className="h-full rounded-sm bg-white" style={{ width: `${progressPct}%` }} />
+        <div className="mb-1.5 mt-2">
+          <Progress
+            value={progressPct}
+            max={100}
+            className="h-1 bg-white/15 [&>div]:bg-white [&>div]:rounded-sm"
+          />
         </div>
         <div className="flex justify-between text-[10px] text-white/50">
           <span>{progressLabel}</span>

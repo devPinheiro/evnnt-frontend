@@ -8,6 +8,8 @@ const endpoints = {
   },
   events: {
     list: "/api/v1/events",
+    /** POST create — same resource path as list */
+    create: "/api/v1/events",
   },
 } as const;
 

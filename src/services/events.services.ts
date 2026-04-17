@@ -1,25 +1,8 @@
+import type { EventRow } from "@/services/events.api";
 import endpoints from "@endpoints";
 import { useQueryData } from "@hooks";
 
-/** Mirrors Evvnt Prisma `Event` JSON (dates are ISO strings over the wire). */
-export type EventRow = {
-  id: string;
-  organisationId: string;
-  name: string;
-  slug: string;
-  description?: string | null;
-  coverImageUrl?: string | null;
-  status: string;
-  startsAt: string | null;
-  endsAt?: string | null;
-  timezone?: string | null;
-  location?: string | null;
-  isOnline?: boolean;
-  publishedAt?: string | null;
-  cancelledAt?: string | null;
-  createdAt: string;
-  updatedAt?: string;
-};
+export type { EventRow };
 
 export const useListEvents = () =>
   useQueryData<{ events: EventRow[] }>({

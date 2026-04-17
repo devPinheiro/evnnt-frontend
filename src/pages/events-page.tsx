@@ -7,13 +7,14 @@ import {
   ActivityFeed,
   AttentionStrip,
   DashboardContent,
+  DashboardPageSkeleton,
   DashboardTopbar,
   EventsSection,
   KpiStrip,
   PlanWidget,
   QuickActions,
 } from "@organisms/dashboard";
-import { useAuthStore } from "@store";
+import { useAuthStore, useUiStore } from "@store";
 import { useRouter } from "@tanstack/react-router";
 import { Button } from "@ui/button";
 
@@ -21,6 +22,7 @@ import { Button } from "@ui/button";
 export function EventsPage() {
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
+  const openCreateEvent = useUiStore((s) => s.openCreateEvent);
 
   const { data, isLoading, error } = useListEvents();
   const events = data?.events;
@@ -43,27 +45,47 @@ export function EventsPage() {
 
   return (
     <>
-      <DashboardTopbar title={<>Good morning, {first} 👋</>} subtitle={subtitleParts.join(" · ")} />
+      <DashboardTopbar
+        title={<>Good morning, {first} 👋</>}
+        subtitle={subtitleParts.join(" · ")}
+        onNewEvent={openCreateEvent}
+      />
 
       <DashboardContent>
-        {isLoading && <p className="text-sm text-evvnt-n500">Loading your events…</p>}
-        {error && <p className="text-sm text-evvnt-danger">{getApiErrorMessage(error)}</p>}
-
-        <KpiStrip items={demoKpiItems} />
-
-        <AttentionStrip title="Needs your attention" count={4} items={demoAttentionItems} />
-
-        <EventsSection events={demoEventCards} totalLabel={`${events?.length ?? 5} total`} />
-
-        <div className="grid shrink-0 grid-cols-[1.2fr_1fr] gap-3">
-          <ActivityFeed rows={demoActivityRows} />
-          <div className="flex flex-col gap-2.5">
-            <QuickActions />
-            <PlanWidget />
+        {error && (
+          <div
+            className="shrink-0 rounded-evvnt-xl border border-evvnt-danger-light bg-evvnt-danger-subtle px-4 py-3 text-sm text-evvnt-danger"
+            role="alert"
+          >
+            {getApiErrorMessage(error)}
           </div>
-        </div>
+        )}
 
-        <div className="flex justify-end border-t border-evvnt-n200 pt-4">
+        {isLoading ? (
+          <DashboardPageSkeleton />
+        ) : (
+          <>
+            <KpiStrip items={demoKpiItems} />
+
+            <AttentionStrip title="Needs your attention" count={4} items={demoAttentionItems} />
+
+            <EventsSection
+              events={demoEventCards}
+              totalLabel={`${events?.length ?? 5} total`}
+              onNewEvent={openCreateEvent}
+            />
+
+            <div className="grid shrink-0 grid-cols-1 gap-4 lg:grid-cols-[1.15fr_1fr] lg:gap-5">
+              <ActivityFeed rows={demoActivityRows} />
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <QuickActions />
+                <PlanWidget />
+              </div>
+            </div>
+          </>
+        )}
+
+        <div className="flex justify-end border-evvnt-n200 border-t pt-5">
           <Button
             type="button"
             variant="ghost"

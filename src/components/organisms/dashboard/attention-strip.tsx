@@ -32,21 +32,21 @@ export function AttentionStrip({
   className,
 }: AttentionStripProps) {
   return (
-    <section className={cn("flex flex-col gap-2", className)}>
-      <div className="mb-2 flex shrink-0 items-center justify-between">
+    <section className={cn("flex flex-col gap-3", className)}>
+      <div className="flex shrink-0 items-center justify-between">
         <div>
-          <span className="text-sm font-semibold text-evvnt-ink">{title}</span>
+          <h2 className="text-base font-semibold tracking-tight text-evvnt-ink">{title}</h2>
           {count != null && (
-            <span className="ml-1.5 text-[11px] text-evvnt-n400">· {count} items</span>
+            <p className="mt-0.5 text-[11px] text-evvnt-n500">{count} items need review</p>
           )}
         </div>
       </div>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         {items.map((a) => (
           <button
             key={a.id}
             type="button"
-            className="flex cursor-pointer items-center gap-2.5 rounded-evvnt-lg border border-evvnt-n200 bg-white px-3.5 py-2.5 text-left transition-colors hover:bg-evvnt-n50"
+            className="flex cursor-pointer flex-wrap items-center gap-x-2 gap-y-1.5 rounded-evvnt-xl border border-evvnt-n200 bg-white px-3.5 py-3 text-left shadow-[0_1px_2px_rgb(26_9_51_/_4%)] transition-all hover:border-evvnt-n300 hover:bg-evvnt-n50 hover:shadow-[0_2px_8px_-2px_rgb(26_9_51_/_10%)] sm:gap-2.5"
           >
             <span
               className="size-2 shrink-0 rounded-full"

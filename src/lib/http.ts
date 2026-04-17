@@ -1,3 +1,4 @@
+import { isDashboardPublicBypassPath } from "@/lib/dashboard-public";
 import { useAuthStore } from "@/store/auth.store";
 import type { ApiErrorBody, ApiSuccess } from "@types";
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
@@ -24,6 +25,11 @@ function isPublicAuthPath(pathname: string): boolean {
     pathname.startsWith("/login") ||
     pathname.startsWith("/signup")
   );
+}
+
+/** Don’t force navigation to `/login` when already on a “safe” route (auth screens or public dashboard). */
+function shouldSkipLoginRedirect(pathname: string): boolean {
+  return isPublicAuthPath(pathname) || isDashboardPublicBypassPath(pathname);
 }
 
 function isAuthCredentialsRequest(url: string | undefined): boolean {
@@ -89,7 +95,7 @@ http.interceptors.response.use(
 
     if (isRefreshRequest(url)) {
       useAuthStore.getState().logout();
-      if (typeof window !== "undefined" && !isPublicAuthPath(window.location.pathname)) {
+      if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
         window.location.assign("/login");
       }
       return rejectWithEnvelopeOrNetwork(err);
@@ -119,7 +125,7 @@ http.interceptors.response.use(
           return http(originalRequest);
         } catch {
           useAuthStore.getState().logout();
-          if (typeof window !== "undefined" && !isPublicAuthPath(window.location.pathname)) {
+          if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
             window.location.assign("/login");
           }
           return rejectWithEnvelopeOrNetwork(err);
@@ -128,7 +134,7 @@ http.interceptors.response.use(
     }
 
     useAuthStore.getState().logout();
-    if (typeof window !== "undefined" && !isPublicAuthPath(window.location.pathname)) {
+    if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
       window.location.assign("/login");
     }
 

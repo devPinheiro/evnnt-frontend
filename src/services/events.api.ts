@@ -26,3 +26,19 @@ export async function listEvents() {
   const { data } = await http.get<ApiSuccess<{ events: EventRow[] }>>(endpoints.events.list);
   return unwrap(data).events;
 }
+
+/** Body for `POST /api/v1/events` — aligns with Evvnt `Event` create DTO */
+export type CreateEventBody = {
+  name: string;
+  description?: string | null;
+  startsAt: string;
+  endsAt?: string | null;
+  timezone?: string | null;
+  location?: string | null;
+  isOnline?: boolean;
+};
+
+export async function createEvent(body: CreateEventBody) {
+  const { data } = await http.post<ApiSuccess<{ event: EventRow }>>(endpoints.events.create, body);
+  return unwrap(data).event;
+}

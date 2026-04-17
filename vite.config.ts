@@ -6,6 +6,8 @@ import { defineConfig } from "vite";
 const r = (p: string) => resolve(__dirname, "./src", p);
 
 export default defineConfig({
+  /** Load `src/.env` alongside the app (API URL, feature flags). */
+  envDir: resolve(__dirname, "src"),
   plugins: [tanstackRouter({ target: "react" }), react()],
   resolve: {
     alias: {

@@ -37,19 +37,19 @@ export function QuickActions({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-evvnt-2xl border border-evvnt-n200 bg-white",
+        "flex flex-col overflow-hidden rounded-evvnt-2xl border border-evvnt-n200 bg-white shadow-[0_1px_2px_rgb(26_9_51_/_5%)]",
         className,
       )}
     >
-      <div className="border-b border-evvnt-n100 px-4 py-3.5 pb-3">
-        <div className="text-[13px] font-semibold text-evvnt-ink">Quick actions</div>
+      <div className="border-b border-evvnt-n100 bg-evvnt-n50/40 px-4 py-3.5 pb-3">
+        <div className="text-[13px] font-semibold tracking-tight text-evvnt-ink">Quick actions</div>
       </div>
-      <div className="grid grid-cols-2 gap-2 p-3">
+      <div className="grid grid-cols-2 gap-2 p-3 sm:gap-2.5">
         {actions.map((a) => (
           <button
             key={a.id}
             type="button"
-            className="flex cursor-pointer flex-col gap-1.5 rounded-evvnt-lg border border-evvnt-n200 bg-evvnt-mist p-3 text-left transition-all hover:border-evvnt-muted hover:bg-evvnt-tint"
+            className="flex cursor-pointer flex-col gap-1.5 rounded-evvnt-lg border border-evvnt-n200 bg-evvnt-mist p-3 text-left transition-all hover:border-evvnt-muted hover:bg-evvnt-tint hover:shadow-sm active:scale-[0.99]"
           >
             <div
               className={cn("flex size-7 items-center justify-center rounded-evvnt-sm", a.iconBg)}

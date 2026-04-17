@@ -1,6 +1,6 @@
+import { useZodForm } from "@/hooks/use-zod-form";
 import { getApiErrorMessage } from "@/lib/api-error";
 import { useLogin } from "@/services/auth.services";
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { LoginFormValues } from "@schemas/auth.schemas";
 import { loginSchema } from "@schemas/auth.schemas";
 import { useAuthStore } from "@store";
@@ -10,16 +10,14 @@ import { Button } from "@ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@ui/form";
 import { Input } from "@ui/input";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { toast } from "@ui/sonner";
 
 export function LoginPage() {
   const router = useRouter();
   const setSession = useAuthStore((s) => s.setSession);
   const login = useLogin();
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useZodForm(loginSchema, {
     defaultValues: {
       orgId: "",
       email: "",

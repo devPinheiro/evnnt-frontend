@@ -5,6 +5,7 @@ import {
   Gift,
   ImageIcon,
   LayoutGrid,
+  LayoutPanelLeft,
   LineChart,
   Mail,
   Settings,
@@ -16,10 +17,14 @@ import type { ReactNode } from "react";
 
 import { displayNameFromUser, getInitialsFromUser } from "@hooks";
 import { useAuthStore } from "@store";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { cn } from "@utils";
+
+import { useDashboardLayout } from "./dashboard-layout-context";
 
 type NavGlyph =
   | "dashboard"
+  | "planner"
   | "events"
   | "analytics"
   | "guests"
@@ -38,9 +43,21 @@ type NavItem = {
   glyph: NavGlyph;
   badge?: string;
   active?: boolean;
+  /** In-app route (TanStack Router) */
+  to?: string;
 };
 
 const stroke = "size-[15px] stroke-[1.5]";
+
+function navItemIsActive(item: NavItem, pathname: string): boolean {
+  if (item.to === "/events/") {
+    return pathname === "/events" || pathname === "/events/";
+  }
+  if (item.to === "/events/planner") {
+    return pathname === "/events/planner";
+  }
+  return Boolean(item.active);
+}
 
 function NavIconBox({ children, active }: { children: ReactNode; active?: boolean }) {
   return (
@@ -59,6 +76,7 @@ function NavGlyphIcon({ name, active }: { name: NavGlyph; active?: boolean }) {
   return (
     <NavIconBox active={active}>
       {name === "dashboard" && <LayoutGrid className={stroke} />}
+      {name === "planner" && <LayoutPanelLeft className={stroke} />}
       {name === "events" && <Calendar className={stroke} />}
       {name === "analytics" && <LineChart className={stroke} />}
       {name === "guests" && <Users className={stroke} />}
@@ -75,7 +93,8 @@ function NavGlyphIcon({ name, active }: { name: NavGlyph; active?: boolean }) {
 }
 
 const workspaceItems: NavItem[] = [
-  { id: "dashboard", label: "Dashboard", glyph: "dashboard", active: true },
+  { id: "dashboard", label: "Dashboard", glyph: "dashboard", to: "/events/" },
+  { id: "planner", label: "Planner", glyph: "planner", to: "/events/planner" },
   { id: "events", label: "My Events", glyph: "events", badge: "5" },
   { id: "analytics", label: "Analytics", glyph: "analytics", badge: "v1.1" },
 ];
@@ -96,16 +115,18 @@ const settingsItems: NavItem[] = [
 ];
 
 function NavRow({ item }: { item: NavItem }) {
-  const isActive = item.active;
-  return (
-    <button
-      type="button"
-      className={cn(
-        "relative mb-px flex cursor-pointer items-center gap-[9px] rounded-evvnt-md px-2.5 py-2 transition-colors",
-        "hover:bg-white/6",
-        isActive && "bg-[rgb(124_58_237_/_22%)]",
-      )}
-    >
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isActive = navItemIsActive(item, pathname);
+  const { closeSidebar } = useDashboardLayout();
+
+  const className = cn(
+    "relative mb-px flex w-full cursor-pointer items-center gap-[9px] rounded-evvnt-md px-2.5 py-2 text-left transition-colors",
+    "hover:bg-white/6",
+    isActive && "bg-[rgb(124_58_237_/_22%)]",
+  );
+
+  const inner = (
+    <>
       {isActive && (
         <span className="absolute top-1/2 left-0 h-[18px] w-[3px] -translate-y-1/2 rounded-r-sm bg-evvnt-vivid" />
       )}
@@ -129,6 +150,20 @@ function NavRow({ item }: { item: NavItem }) {
           {item.badge}
         </span>
       )}
+    </>
+  );
+
+  if (item.to) {
+    return (
+      <Link to={item.to} className={className} onClick={() => closeSidebar()}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return (
+    <button type="button" className={className}>
+      {inner}
     </button>
   );
 }

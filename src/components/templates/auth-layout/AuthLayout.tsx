@@ -23,7 +23,7 @@ export function AuthLayout({ children, showWordmark = true }: AuthLayoutProps) {
         className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgb(75_31_168_/_12%)_0%,transparent_68%)]"
       />
 
-      <div className="relative mx-auto flex min-h-screen max-w-lg flex-col justify-center px-6 py-12">
+      <div className="relative mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4 py-8 sm:px-6 sm:py-12">
         {showWordmark && <AuthWordmark />}
         {children}
       </div>

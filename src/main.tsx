@@ -1,11 +1,11 @@
 import { SessionBootstrap } from "@/components/SessionBootstrap";
+import { Toaster } from "@/components/ui/sonner";
 import { queryClient } from "@/lib/queryClient";
 import { useAuthStore } from "@/store/auth.store";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Toaster } from "sonner";
 import "./global.css";
 import { routeTree } from "./routeTree.gen";
 
@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} context={{ auth: { isLoggedIn } }} />
-      <Toaster richColors position="top-center" />
+      <Toaster />
     </>
   );
 }

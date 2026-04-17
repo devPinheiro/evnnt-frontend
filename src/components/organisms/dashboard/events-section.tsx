@@ -18,37 +18,40 @@ export function EventsSection({ events, totalLabel, onNewEvent }: EventsSectionP
   const [tab, setTab] = useState<(typeof tabs)[number]>("All");
 
   return (
-    <section>
-      <div className="mb-2.5 flex shrink-0 items-center justify-between">
-        <div>
-          <span className="text-sm font-semibold text-evvnt-ink">My events</span>
-          {totalLabel && <span className="ml-1.5 text-[11px] text-evvnt-n400">· {totalLabel}</span>}
+    <section className="min-w-0">
+      <div className="mb-4 flex shrink-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h2 className="text-base font-semibold tracking-tight text-evvnt-ink">My events</h2>
+          {totalLabel && <p className="mt-0.5 text-[11px] text-evvnt-n500">{totalLabel}</p>}
         </div>
-        <div className="flex items-center gap-2.5">
-          <div className="flex gap-1">
+        <div className="flex min-w-0 flex-col gap-2.5 sm:items-end">
+          <div className="-mx-1 flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden">
             {tabs.map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTab(t)}
                 className={cn(
-                  "cursor-pointer rounded-evvnt-sm border border-transparent px-3 py-1 text-xs font-medium transition-colors",
+                  "shrink-0 cursor-pointer rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
                   tab === t
-                    ? "border-evvnt-muted bg-evvnt-tint text-evvnt-core"
-                    : "text-evvnt-n500 hover:bg-evvnt-n50",
+                    ? "border-evvnt-muted bg-evvnt-tint text-evvnt-core shadow-sm"
+                    : "border-transparent text-evvnt-n500 hover:bg-evvnt-n50",
                 )}
               >
                 {t}
               </button>
             ))}
           </div>
-          <button type="button" className="cursor-pointer text-xs font-medium text-evvnt-vivid">
+          <button
+            type="button"
+            className="w-fit cursor-pointer self-end text-xs font-medium text-evvnt-vivid transition-colors hover:text-evvnt-core sm:self-auto"
+          >
             Manage all →
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5 xl:grid-cols-3">
         {events.map((ev, i) => (
           <EventCard key={`${ev.title}-${i}`} {...ev} />
         ))}

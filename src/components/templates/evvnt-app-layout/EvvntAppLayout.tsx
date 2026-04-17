@@ -1,6 +1,8 @@
+import { DashboardLayoutProvider } from "@organisms/dashboard/dashboard-layout-context";
 import { DashboardMain } from "@organisms/dashboard/dashboard-main";
 import { DashboardShell } from "@organisms/dashboard/dashboard-shell";
 import { DashboardSidebar } from "@organisms/dashboard/dashboard-sidebar";
+import { UiOverlays } from "@organisms/dashboard/ui-overlays";
 import type { ReactNode } from "react";
 
 /**
@@ -9,8 +11,11 @@ import type { ReactNode } from "react";
  */
 export default function EvvntAppLayout({ children }: { children: ReactNode }) {
   return (
-    <DashboardShell sidebar={<DashboardSidebar />}>
-      <DashboardMain>{children}</DashboardMain>
-    </DashboardShell>
+    <DashboardLayoutProvider>
+      <DashboardShell sidebar={<DashboardSidebar />}>
+        <DashboardMain>{children}</DashboardMain>
+        <UiOverlays />
+      </DashboardShell>
+    </DashboardLayoutProvider>
   );
 }

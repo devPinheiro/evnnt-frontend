@@ -71,8 +71,9 @@ export function EventCard({
   return (
     <article
       className={cn(
-        "flex cursor-pointer flex-col overflow-hidden rounded-evvnt-card border border-evvnt-n200 bg-white transition-all hover:-translate-y-px hover:shadow-[0_4px_16px_-2px_rgb(26_9_51_/_12%)]",
-        featured && "border-evvnt-muted shadow-[0_2px_8px_rgb(26_9_51_/_8%)]",
+        "flex cursor-pointer flex-col overflow-hidden rounded-evvnt-card border border-evvnt-n200 bg-white shadow-[0_1px_3px_rgb(26_9_51_/_6%)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-8px_rgb(26_9_51_/_14%)]",
+        featured &&
+          "border-evvnt-muted ring-1 ring-evvnt-muted/40 shadow-[0_4px_14px_-4px_rgb(26_9_51_/_12%)]",
         dimmed && "opacity-75",
       )}
     >

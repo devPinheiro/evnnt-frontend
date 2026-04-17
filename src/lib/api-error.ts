@@ -1,3 +1,4 @@
+import { MUTATION_ERROR_FALLBACKS } from "@/data/mutation-messages";
 import type { ApiErrorBody } from "@types";
 import { isAxiosError } from "axios";
 
@@ -22,4 +23,15 @@ export function getApiErrorMessage(err: unknown): string {
     return err.message;
   }
   return "Something went wrong";
+}
+
+type MutationMethod = keyof typeof MUTATION_ERROR_FALLBACKS;
+
+/** Method-aware fallback after `getApiErrorMessage` — aligned with EHR `getErrorMessage`. */
+export function getMutationErrorMessage(error: unknown, method: MutationMethod): string {
+  const extracted = getApiErrorMessage(error);
+  if (extracted !== "Something went wrong") {
+    return extracted;
+  }
+  return MUTATION_ERROR_FALLBACKS[method];
 }

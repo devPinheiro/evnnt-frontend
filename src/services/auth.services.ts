@@ -21,6 +21,8 @@ export const useLogin = () =>
     { orgId: string; email: string; password: string }
   >({
     url: endpoints.auth.login,
+    skipSuccessToast: true,
+    skipErrorToast: true,
   });
 
 export const useSignup = () =>
@@ -33,6 +35,8 @@ export const useSignup = () =>
     { orgName: string; email: string; password: string; name?: string }
   >({
     url: endpoints.auth.signup,
+    skipSuccessToast: true,
+    skipErrorToast: true,
   });
 
 export const useMe = (enabled: boolean) =>
