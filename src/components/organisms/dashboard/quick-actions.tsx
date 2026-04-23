@@ -1,4 +1,5 @@
 import { CreditCard, Gift, Mail, ScanLine } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 import { cn } from "@utils";
 
@@ -34,6 +35,8 @@ const actions = [
 ] as const;
 
 export function QuickActions({ className }: { className?: string }) {
+  const navigate = useNavigate();
+
   return (
     <div
       className={cn(
@@ -49,6 +52,11 @@ export function QuickActions({ className }: { className?: string }) {
           <button
             key={a.id}
             type="button"
+            onClick={() => {
+              if (a.id === "invite") {
+                void navigate({ to: "/events/invites" });
+              }
+            }}
             className="flex cursor-pointer flex-col gap-1.5 rounded-evvnt-lg border border-evvnt-n200 bg-evvnt-mist p-3 text-left transition-all hover:border-evvnt-muted hover:bg-evvnt-tint hover:shadow-sm active:scale-[0.99]"
           >
             <div

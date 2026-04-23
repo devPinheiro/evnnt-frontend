@@ -53,8 +53,8 @@ function navItemIsActive(item: NavItem, pathname: string): boolean {
   if (item.to === "/events/") {
     return pathname === "/events" || pathname === "/events/";
   }
-  if (item.to === "/events/planner") {
-    return pathname === "/events/planner";
+  if (item.to) {
+    return pathname === item.to;
   }
   return Boolean(item.active);
 }
@@ -105,7 +105,7 @@ const moduleItems: NavItem[] = [
   { id: "vendors", label: "Vendors", glyph: "vendors" },
   { id: "finances", label: "Finances", glyph: "finances" },
   { id: "gifting", label: "Gifting", glyph: "gifting" },
-  { id: "invites", label: "E-Invites", glyph: "invites" },
+  { id: "invites", label: "E-Invites", glyph: "invites", to: "/events/invites" },
   { id: "gallery", label: "Gallery", glyph: "gallery" },
 ];
 
