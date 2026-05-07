@@ -4,3 +4,4 @@ dist
 .env.local
 src/.env
 *.local
+EVVNT-PRD-v1.1.md

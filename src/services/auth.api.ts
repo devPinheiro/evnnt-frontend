@@ -12,7 +12,7 @@ export type MeUser = AuthUser & {
   createdAt?: string;
 };
 
-export async function login(input: { orgId: string; email: string; password: string }) {
+export async function login(input: { email: string; password: string }) {
   const { data } = await http.post<
     ApiSuccess<{
       user: AuthUser & { emailVerified?: boolean };

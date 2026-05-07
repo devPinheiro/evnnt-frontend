@@ -7,7 +7,6 @@ import {
   LayoutGrid,
   LayoutPanelLeft,
   LineChart,
-  Mail,
   Settings,
   Ticket,
   Users,
@@ -32,7 +31,6 @@ type NavGlyph =
   | "vendors"
   | "finances"
   | "gifting"
-  | "invites"
   | "gallery"
   | "settings"
   | "team";
@@ -84,7 +82,6 @@ function NavGlyphIcon({ name, active }: { name: NavGlyph; active?: boolean }) {
       {name === "vendors" && <BarChart3 className={stroke} />}
       {name === "finances" && <CreditCard className={stroke} />}
       {name === "gifting" && <Gift className={stroke} />}
-      {name === "invites" && <Mail className={stroke} />}
       {name === "gallery" && <ImageIcon className={stroke} />}
       {name === "settings" && <Settings className={stroke} />}
       {name === "team" && <UsersRound className={stroke} />}
@@ -100,12 +97,11 @@ const workspaceItems: NavItem[] = [
 ];
 
 const moduleItems: NavItem[] = [
-  { id: "guests", label: "Guests", glyph: "guests" },
+  { id: "guests", label: "Guests", glyph: "guests", to: "/events/guests" },
   { id: "tickets", label: "Tickets", glyph: "tickets" },
   { id: "vendors", label: "Vendors", glyph: "vendors" },
   { id: "finances", label: "Finances", glyph: "finances" },
   { id: "gifting", label: "Gifting", glyph: "gifting" },
-  { id: "invites", label: "E-Invites", glyph: "invites", to: "/events/invites" },
   { id: "gallery", label: "Gallery", glyph: "gallery" },
 ];
 

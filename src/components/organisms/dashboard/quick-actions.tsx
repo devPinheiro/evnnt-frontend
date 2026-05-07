@@ -1,16 +1,9 @@
-import { CreditCard, Gift, Mail, ScanLine } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import { CreditCard, Gift, ScanLine } from "lucide-react";
 
 import { cn } from "@utils";
 
 const actions = [
-  {
-    id: "invite",
-    title: "Send e-invite",
-    subtitle: "WhatsApp + email · all or selected groups",
-    icon: <Mail className="size-[14px] text-evvnt-core" strokeWidth={1.2} />,
-    iconBg: "bg-evvnt-tint",
-  },
   {
     id: "checkin",
     title: "Open check-in",
@@ -53,9 +46,7 @@ export function QuickActions({ className }: { className?: string }) {
             key={a.id}
             type="button"
             onClick={() => {
-              if (a.id === "invite") {
-                void navigate({ to: "/events/invites" });
-              }
+              void navigate({ to: "/events" });
             }}
             className="flex cursor-pointer flex-col gap-1.5 rounded-evvnt-lg border border-evvnt-n200 bg-evvnt-mist p-3 text-left transition-all hover:border-evvnt-muted hover:bg-evvnt-tint hover:shadow-sm active:scale-[0.99]"
           >

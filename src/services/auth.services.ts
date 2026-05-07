@@ -18,7 +18,7 @@ export const useLogin = () =>
       user: AuthUser & { emailVerified?: boolean };
       tokens: { accessToken: string; refreshToken: string };
     },
-    { orgId: string; email: string; password: string }
+    { email: string; password: string }
   >({
     url: endpoints.auth.login,
     skipSuccessToast: true,

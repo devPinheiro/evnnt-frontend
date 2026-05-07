@@ -1,5 +1,6 @@
 import { useZodForm } from "@/hooks/use-zod-form";
 import { getApiErrorMessage } from "@/lib/api-error";
+import { decodeJwtPayloadUnsafe } from "@/lib/jwt-payload";
 import { useLogin } from "@/services/auth.services";
 import type { LoginFormValues } from "@schemas/auth.schemas";
 import { loginSchema } from "@schemas/auth.schemas";
@@ -19,20 +20,23 @@ export function LoginPage() {
 
   const form = useZodForm(loginSchema, {
     defaultValues: {
-      orgId: "",
       email: "",
       password: "",
     },
   });
 
   async function onSubmit(values: LoginFormValues) {
-    const orgId = values.orgId.trim();
     try {
       const data = await login.mutateAsync({
-        orgId,
         email: values.email.trim(),
         password: values.password,
       });
+      const claims = decodeJwtPayloadUnsafe(data.tokens.accessToken);
+      const orgId = typeof claims?.orgId === "string" ? claims.orgId : null;
+      if (!orgId) {
+        toast.error("Could not establish session");
+        return;
+      }
       setSession({
         accessToken: data.tokens.accessToken,
         refreshToken: data.tokens.refreshToken,
@@ -58,23 +62,10 @@ export function LoginPage() {
             <CardHeader className="space-y-1.5 p-6 pb-4">
               <CardTitle className="text-xl font-semibold text-evvnt-ink">Sign in</CardTitle>
               <p className="text-sm leading-relaxed text-evvnt-n500">
-                Use your organisation ID, email, and password to access your workspace.
+                Use your email and password to access your workspace.
               </p>
             </CardHeader>
             <CardContent className="flex flex-col gap-4 px-6 pb-6">
-              <FormField
-                control={form.control}
-                name="orgId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Organisation ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} autoComplete="organization" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="email"
