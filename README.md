@@ -6,7 +6,7 @@
 
 ## Stack
 
-Vite · React 19 · TypeScript, aligned with the **EHR** app patterns (`/Users/pinheiro/EHR/ehr`): TanStack Router (file routes), TanStack Query, Zustand (auth persistence), Axios, React Hook Form, Zod, Tailwind CSS, Radix primitives, Biome, Vitest.
+Vite · React 19 · TypeScript, TanStack Router (file routes), TanStack Query, Zustand (auth persistence), Axios, React Hook Form, Zod, Tailwind CSS, Radix primitives, Biome, Vitest.
 
 This project is **`evvnt-frontend`** — a separate directory next to the **`evvnt`** backend repo (not inside it).
 
