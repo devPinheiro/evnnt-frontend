@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --port 3000",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "lint": "biome check --write ./src"
+    "lint": "biome check --write ./src",
+    "test": "vitest run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -65,6 +66,7 @@
     "postcss": "^8.5.10",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
   }
 }

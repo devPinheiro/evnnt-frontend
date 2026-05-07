@@ -12,11 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as InviteSlugRouteImport } from './routes/invite.$slug'
 import { Route as authenticatedAppLayoutRouteImport } from './routes/(authenticated)/_appLayout'
 import { Route as authenticatedAppLayoutEventsIndexRouteImport } from './routes/(authenticated)/_appLayout/events/index'
 import { Route as authenticatedAppLayoutEventsPlannerRouteImport } from './routes/(authenticated)/_appLayout/events/planner'
-import { Route as authenticatedAppLayoutEventsInvitesRouteImport } from './routes/(authenticated)/_appLayout/events/invites'
+import { Route as authenticatedAppLayoutEventsGuestsRouteImport } from './routes/(authenticated)/_appLayout/events/guests'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -31,11 +30,6 @@ const LoginRoute = LoginRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InviteSlugRoute = InviteSlugRouteImport.update({
-  id: '/invite/$slug',
-  path: '/invite/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authenticatedAppLayoutRoute = authenticatedAppLayoutRouteImport.update({
@@ -54,10 +48,10 @@ const authenticatedAppLayoutEventsPlannerRoute =
     path: '/events/planner',
     getParentRoute: () => authenticatedAppLayoutRoute,
   } as any)
-const authenticatedAppLayoutEventsInvitesRoute =
-  authenticatedAppLayoutEventsInvitesRouteImport.update({
-    id: '/events/invites',
-    path: '/events/invites',
+const authenticatedAppLayoutEventsGuestsRoute =
+  authenticatedAppLayoutEventsGuestsRouteImport.update({
+    id: '/events/guests',
+    path: '/events/guests',
     getParentRoute: () => authenticatedAppLayoutRoute,
   } as any)
 
@@ -65,8 +59,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/invite/$slug': typeof InviteSlugRoute
-  '/events/invites': typeof authenticatedAppLayoutEventsInvitesRoute
+  '/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
@@ -74,8 +67,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/invite/$slug': typeof InviteSlugRoute
-  '/events/invites': typeof authenticatedAppLayoutEventsInvitesRoute
+  '/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/events': typeof authenticatedAppLayoutEventsIndexRoute
 }
@@ -85,8 +77,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/(authenticated)/_appLayout': typeof authenticatedAppLayoutRouteWithChildren
-  '/invite/$slug': typeof InviteSlugRoute
-  '/(authenticated)/_appLayout/events/invites': typeof authenticatedAppLayoutEventsInvitesRoute
+  '/(authenticated)/_appLayout/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/(authenticated)/_appLayout/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
   '/(authenticated)/_appLayout/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
@@ -96,8 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
-    | '/invite/$slug'
-    | '/events/invites'
+    | '/events/guests'
     | '/events/planner'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
@@ -105,8 +95,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
-    | '/invite/$slug'
-    | '/events/invites'
+    | '/events/guests'
     | '/events/planner'
     | '/events'
   id:
@@ -115,8 +104,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/(authenticated)/_appLayout'
-    | '/invite/$slug'
-    | '/(authenticated)/_appLayout/events/invites'
+    | '/(authenticated)/_appLayout/events/guests'
     | '/(authenticated)/_appLayout/events/planner'
     | '/(authenticated)/_appLayout/events/'
   fileRoutesById: FileRoutesById
@@ -126,7 +114,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   authenticatedAppLayoutRoute: typeof authenticatedAppLayoutRouteWithChildren
-  InviteSlugRoute: typeof InviteSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,13 +139,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/invite/$slug': {
-      id: '/invite/$slug'
-      path: '/invite/$slug'
-      fullPath: '/invite/$slug'
-      preLoaderRoute: typeof InviteSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(authenticated)/_appLayout': {
       id: '/(authenticated)/_appLayout'
       path: ''
@@ -180,26 +160,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAppLayoutEventsPlannerRouteImport
       parentRoute: typeof authenticatedAppLayoutRoute
     }
-    '/(authenticated)/_appLayout/events/invites': {
-      id: '/(authenticated)/_appLayout/events/invites'
-      path: '/events/invites'
-      fullPath: '/events/invites'
-      preLoaderRoute: typeof authenticatedAppLayoutEventsInvitesRouteImport
+    '/(authenticated)/_appLayout/events/guests': {
+      id: '/(authenticated)/_appLayout/events/guests'
+      path: '/events/guests'
+      fullPath: '/events/guests'
+      preLoaderRoute: typeof authenticatedAppLayoutEventsGuestsRouteImport
       parentRoute: typeof authenticatedAppLayoutRoute
     }
   }
 }
 
 interface authenticatedAppLayoutRouteChildren {
-  authenticatedAppLayoutEventsInvitesRoute: typeof authenticatedAppLayoutEventsInvitesRoute
+  authenticatedAppLayoutEventsGuestsRoute: typeof authenticatedAppLayoutEventsGuestsRoute
   authenticatedAppLayoutEventsPlannerRoute: typeof authenticatedAppLayoutEventsPlannerRoute
   authenticatedAppLayoutEventsIndexRoute: typeof authenticatedAppLayoutEventsIndexRoute
 }
 
 const authenticatedAppLayoutRouteChildren: authenticatedAppLayoutRouteChildren =
   {
-    authenticatedAppLayoutEventsInvitesRoute:
-      authenticatedAppLayoutEventsInvitesRoute,
+    authenticatedAppLayoutEventsGuestsRoute:
+      authenticatedAppLayoutEventsGuestsRoute,
     authenticatedAppLayoutEventsPlannerRoute:
       authenticatedAppLayoutEventsPlannerRoute,
     authenticatedAppLayoutEventsIndexRoute:
@@ -216,7 +196,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   authenticatedAppLayoutRoute: authenticatedAppLayoutRouteWithChildren,
-  InviteSlugRoute: InviteSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
