@@ -5,3 +5,4 @@ dist
 src/.env
 *.local
 EVVNT-PRD-v1.1.md
+.open-design-tmp

@@ -1,33 +1,24 @@
 import { getApiErrorMessage } from "@/lib/api-error";
 import { logoutSession } from "@/services/auth.services";
 import { useListEvents } from "@/services/events.services";
-import { demoActivityRows, demoAttentionItems, demoEventCards, demoKpiItems } from "@data";
-import { greetingFirstName } from "@hooks";
+import { demoEventCards } from "@data";
 import {
-  ActivityFeed,
-  AttentionStrip,
   DashboardContent,
-  DashboardPageSkeleton,
   DashboardTopbar,
+  EventsPageSkeleton,
   EventsSection,
-  KpiStrip,
-  PlanWidget,
-  QuickActions,
 } from "@organisms/dashboard";
-import { useAuthStore, useUiStore } from "@store";
-import { useRouter } from "@tanstack/react-router";
+import { useUiStore } from "@store";
+import { Link, useRouter } from "@tanstack/react-router";
 import { Button } from "@ui/button";
 
-/** Authenticated dashboard — events home (matches product “My events” hub). */
+/** My events — list, filters, and create (separate from workspace dashboard). */
 export function EventsPage() {
   const router = useRouter();
-  const user = useAuthStore((s) => s.user);
   const openCreateEvent = useUiStore((s) => s.openCreateEvent);
 
   const { data, isLoading, error } = useListEvents();
   const events = data?.events;
-
-  const first = greetingFirstName(user);
 
   const subtitleParts = [
     new Intl.DateTimeFormat("en-GB", {
@@ -40,13 +31,13 @@ export function EventsPage() {
   if (events && events.length > 0) {
     subtitleParts.push(`${events.length} event${events.length === 1 ? "" : "s"} in your workspace`);
   } else {
-    subtitleParts.push("3 events active this month");
+    subtitleParts.push("Create and manage your events");
   }
 
   return (
     <>
       <DashboardTopbar
-        title={<>Good morning, {first} 👋</>}
+        title={<>My events</>}
         subtitle={subtitleParts.join(" · ")}
         onNewEvent={openCreateEvent}
       />
@@ -62,27 +53,23 @@ export function EventsPage() {
         )}
 
         {isLoading ? (
-          <DashboardPageSkeleton />
+          <EventsPageSkeleton />
         ) : (
-          <>
-            <KpiStrip items={demoKpiItems} />
-
-            <AttentionStrip title="Needs your attention" count={4} items={demoAttentionItems} />
-
+          <div className="flex flex-col gap-5 sm:gap-6">
+            <p className="text-[13px] text-evvnt-n700">
+              <Link
+                to="/dashboard"
+                className="font-medium text-evvnt-core underline-offset-2 hover:underline"
+              >
+                Back to dashboard
+              </Link>
+            </p>
             <EventsSection
               events={demoEventCards}
               totalLabel={`${events?.length ?? 5} total`}
               onNewEvent={openCreateEvent}
             />
-
-            <div className="grid shrink-0 grid-cols-1 gap-4 lg:grid-cols-[1.15fr_1fr] lg:gap-5">
-              <ActivityFeed rows={demoActivityRows} />
-              <div className="flex flex-col gap-3 sm:gap-4">
-                <QuickActions />
-                <PlanWidget />
-              </div>
-            </div>
-          </>
+          </div>
         )}
 
         <div className="flex justify-end border-evvnt-n200 border-t pt-5">
@@ -94,7 +81,7 @@ export function EventsPage() {
             onClick={() => {
               void (async () => {
                 await logoutSession();
-                await router.navigate({ to: "/login" });
+                await router.navigate({ to: "/" });
               })();
             }}
           >

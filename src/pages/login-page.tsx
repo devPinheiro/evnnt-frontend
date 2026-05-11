@@ -48,7 +48,7 @@ export function LoginPage() {
         },
       });
       toast.success("Signed in");
-      await router.navigate({ to: "/events" });
+      await router.navigate({ to: "/dashboard" });
     } catch (err) {
       toast.error(getApiErrorMessage(err));
     }

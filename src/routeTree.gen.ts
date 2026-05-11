@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authenticatedAppLayoutRouteImport } from './routes/(authenticated)/_appLayout'
 import { Route as authenticatedAppLayoutEventsIndexRouteImport } from './routes/(authenticated)/_appLayout/events/index'
+import { Route as authenticatedAppLayoutDashboardIndexRouteImport } from './routes/(authenticated)/_appLayout/dashboard/index'
 import { Route as authenticatedAppLayoutEventsPlannerRouteImport } from './routes/(authenticated)/_appLayout/events/planner'
 import { Route as authenticatedAppLayoutEventsGuestsRouteImport } from './routes/(authenticated)/_appLayout/events/guests'
 
@@ -42,6 +43,12 @@ const authenticatedAppLayoutEventsIndexRoute =
     path: '/events/',
     getParentRoute: () => authenticatedAppLayoutRoute,
   } as any)
+const authenticatedAppLayoutDashboardIndexRoute =
+  authenticatedAppLayoutDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => authenticatedAppLayoutRoute,
+  } as any)
 const authenticatedAppLayoutEventsPlannerRoute =
   authenticatedAppLayoutEventsPlannerRouteImport.update({
     id: '/events/planner',
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
+  '/dashboard/': typeof authenticatedAppLayoutDashboardIndexRoute
   '/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
+  '/dashboard': typeof authenticatedAppLayoutDashboardIndexRoute
   '/events': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   '/(authenticated)/_appLayout': typeof authenticatedAppLayoutRouteWithChildren
   '/(authenticated)/_appLayout/events/guests': typeof authenticatedAppLayoutEventsGuestsRoute
   '/(authenticated)/_appLayout/events/planner': typeof authenticatedAppLayoutEventsPlannerRoute
+  '/(authenticated)/_appLayout/dashboard/': typeof authenticatedAppLayoutDashboardIndexRoute
   '/(authenticated)/_appLayout/events/': typeof authenticatedAppLayoutEventsIndexRoute
 }
 export interface FileRouteTypes {
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/events/guests'
     | '/events/planner'
+    | '/dashboard/'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/events/guests'
     | '/events/planner'
+    | '/dashboard'
     | '/events'
   id:
     | '__root__'
@@ -106,6 +118,7 @@ export interface FileRouteTypes {
     | '/(authenticated)/_appLayout'
     | '/(authenticated)/_appLayout/events/guests'
     | '/(authenticated)/_appLayout/events/planner'
+    | '/(authenticated)/_appLayout/dashboard/'
     | '/(authenticated)/_appLayout/events/'
   fileRoutesById: FileRoutesById
 }
@@ -153,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAppLayoutEventsIndexRouteImport
       parentRoute: typeof authenticatedAppLayoutRoute
     }
+    '/(authenticated)/_appLayout/dashboard/': {
+      id: '/(authenticated)/_appLayout/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof authenticatedAppLayoutDashboardIndexRouteImport
+      parentRoute: typeof authenticatedAppLayoutRoute
+    }
     '/(authenticated)/_appLayout/events/planner': {
       id: '/(authenticated)/_appLayout/events/planner'
       path: '/events/planner'
@@ -173,6 +193,7 @@ declare module '@tanstack/react-router' {
 interface authenticatedAppLayoutRouteChildren {
   authenticatedAppLayoutEventsGuestsRoute: typeof authenticatedAppLayoutEventsGuestsRoute
   authenticatedAppLayoutEventsPlannerRoute: typeof authenticatedAppLayoutEventsPlannerRoute
+  authenticatedAppLayoutDashboardIndexRoute: typeof authenticatedAppLayoutDashboardIndexRoute
   authenticatedAppLayoutEventsIndexRoute: typeof authenticatedAppLayoutEventsIndexRoute
 }
 
@@ -182,6 +203,8 @@ const authenticatedAppLayoutRouteChildren: authenticatedAppLayoutRouteChildren =
       authenticatedAppLayoutEventsGuestsRoute,
     authenticatedAppLayoutEventsPlannerRoute:
       authenticatedAppLayoutEventsPlannerRoute,
+    authenticatedAppLayoutDashboardIndexRoute:
+      authenticatedAppLayoutDashboardIndexRoute,
     authenticatedAppLayoutEventsIndexRoute:
       authenticatedAppLayoutEventsIndexRoute,
   }

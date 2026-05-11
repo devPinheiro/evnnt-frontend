@@ -23,6 +23,8 @@ type AttentionStripProps = {
   count?: number;
   items: AttentionItem[];
   className?: string;
+  /** `rail`: narrow column beside charts — vertical card stack per item. */
+  layout?: "default" | "rail";
 };
 
 export function AttentionStrip({
@@ -30,46 +32,95 @@ export function AttentionStrip({
   count,
   items,
   className,
+  layout = "default",
 }: AttentionStripProps) {
+  const rail = layout === "rail";
+
   return (
-    <section className={cn("flex flex-col gap-3", className)}>
+    <section className={cn("flex flex-col gap-3", rail && "gap-2.5", className)}>
       <div className="flex shrink-0 items-center justify-between">
         <div>
-          <h2 className="text-base font-semibold tracking-tight text-evvnt-ink">{title}</h2>
+          <h2
+            className={cn(
+              "font-bold tracking-tight text-evvnt-ink",
+              rail ? "text-[15px] leading-snug" : "text-[17px]",
+            )}
+          >
+            {title}
+          </h2>
           {count != null && (
-            <p className="mt-0.5 text-[11px] text-evvnt-n500">{count} items need review</p>
+            <p className={cn("mt-0.5 text-evvnt-n500", rail ? "text-[10px]" : "text-[11px]")}>
+              {count} items need review
+            </p>
           )}
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {items.map((a) => (
-          <button
-            key={a.id}
-            type="button"
-            className="flex cursor-pointer flex-wrap items-center gap-x-2 gap-y-1.5 rounded-evvnt-xl border border-evvnt-n200 bg-white px-3.5 py-3 text-left shadow-[0_1px_2px_rgb(26_9_51_/_4%)] transition-all hover:border-evvnt-n300 hover:bg-evvnt-n50 hover:shadow-[0_2px_8px_-2px_rgb(26_9_51_/_10%)] sm:gap-2.5"
-          >
-            <span
-              className="size-2 shrink-0 rounded-full"
-              style={{ background: a.dotColor }}
-              aria-hidden
-            />
-            <div className="min-w-0 flex-1">
-              <div className="text-xs font-semibold text-evvnt-ink">{a.title}</div>
-              <div className="mt-0.5 truncate text-[11px] text-evvnt-n500">{a.subtitle}</div>
-            </div>
-            <span
-              className={cn(
-                "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold whitespace-nowrap",
-                badgeStyles[a.badgeVariant],
-              )}
+        {items.map((a) =>
+          rail ? (
+            <button
+              key={a.id}
+              type="button"
+              className="flex cursor-pointer flex-col items-start gap-2 rounded-[13px] border border-evvnt-n200/90 bg-white px-3.5 py-3 text-left shadow-[0_4px_18px_-10px_rgb(26_9_51_/_10%)] transition-all hover:border-evvnt-n300 hover:bg-evvnt-n50/80 hover:shadow-[0_10px_28px_-12px_rgb(26_9_51_/_12%)] focus-visible:ring-2 focus-visible:ring-evvnt-muted focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              {a.badge}
-            </span>
-            <span className="shrink-0 text-[11px] font-medium whitespace-nowrap text-evvnt-vivid">
-              {a.action}
-            </span>
-          </button>
-        ))}
+              <div className="flex w-full items-start gap-2">
+                <span
+                  className="mt-1.5 size-2 shrink-0 rounded-full"
+                  style={{ background: a.dotColor }}
+                  aria-hidden
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="text-[11px] leading-snug font-semibold text-evvnt-ink">
+                    {a.title}
+                  </div>
+                  <div className="mt-1 line-clamp-3 text-[10px] leading-relaxed text-evvnt-n500">
+                    {a.subtitle}
+                  </div>
+                </div>
+              </div>
+              <div className="flex w-full items-center justify-between gap-2 border-evvnt-n100 border-t border-dashed pt-2">
+                <span
+                  className={cn(
+                    "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold whitespace-nowrap",
+                    badgeStyles[a.badgeVariant],
+                  )}
+                >
+                  {a.badge}
+                </span>
+                <span className="shrink-0 text-[11px] font-medium whitespace-nowrap text-evvnt-vivid">
+                  {a.action}
+                </span>
+              </div>
+            </button>
+          ) : (
+            <button
+              key={a.id}
+              type="button"
+              className="flex cursor-pointer flex-wrap items-center gap-x-2 gap-y-1.5 rounded-[13px] border border-evvnt-n200/90 bg-white px-3.5 py-3 text-left shadow-[0_4px_18px_-10px_rgb(26_9_51_/_10%)] transition-all hover:border-evvnt-n300 hover:bg-evvnt-n50/80 hover:shadow-[0_10px_28px_-12px_rgb(26_9_51_/_12%)] focus-visible:ring-2 focus-visible:ring-evvnt-muted focus-visible:ring-offset-2 focus-visible:outline-none sm:gap-2.5"
+            >
+              <span
+                className="size-2 shrink-0 rounded-full"
+                style={{ background: a.dotColor }}
+                aria-hidden
+              />
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-semibold text-evvnt-ink">{a.title}</div>
+                <div className="mt-0.5 truncate text-[11px] text-evvnt-n500">{a.subtitle}</div>
+              </div>
+              <span
+                className={cn(
+                  "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold whitespace-nowrap",
+                  badgeStyles[a.badgeVariant],
+                )}
+              >
+                {a.badge}
+              </span>
+              <span className="shrink-0 text-[11px] font-medium whitespace-nowrap text-evvnt-vivid">
+                {a.action}
+              </span>
+            </button>
+          ),
+        )}
       </div>
     </section>
   );

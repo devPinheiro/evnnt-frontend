@@ -8,3 +8,4 @@ export * from "./useFormInstance";
 export * from "./useReactQueries";
 export * from "./use-zod-form";
 export { useMediaQuery } from "./useMediaQuery";
+export { useInView } from "./useInView";

@@ -15,6 +15,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@ui/breadcrumb";
+import { Button } from "@ui/button";
 import { toast } from "@ui/sonner";
 import { Bell, Download, Ellipsis, Filter, Mail, UserPlus } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
@@ -252,50 +253,62 @@ export function GuestsPage() {
               </div>
               <div className="mt-3 space-y-2 text-[11px]">
                 <div className="flex gap-1.5">
-                  <button
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setStatusFilter("all")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     All
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setStatusFilter("yes")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     RSVP yes
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setStatusFilter("awaiting")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     Awaiting
-                  </button>
+                  </Button>
                 </div>
                 <div className="flex gap-1.5">
-                  <button
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setGroupFilter("all")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     All groups
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setGroupFilter("VIP")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     VIP
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => setGroupFilter("Family")}
-                    className="rounded-full border border-evvnt-n200 px-2 py-1 text-evvnt-n600"
+                    className="h-auto rounded-full px-2 py-1 text-[11px] text-evvnt-n600"
                   >
                     Family
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -308,37 +321,45 @@ export function GuestsPage() {
               </span>
               <span className="text-xs text-evvnt-n400">· {selectedCount} selected</span>
               <div className="ml-auto flex items-center gap-2">
-                <button
+                <Button
                   type="button"
-                  className="inline-flex h-8 items-center gap-1 rounded-evvnt-md border border-evvnt-n200 px-2.5 text-xs text-evvnt-n500"
+                  variant="secondary"
+                  size="sm"
+                  className="h-8 gap-1 px-2.5 text-xs text-evvnt-n500"
                 >
                   <Filter className="size-3.5" />
                   Filter
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className="inline-flex h-8 items-center gap-1 rounded-evvnt-md border border-evvnt-n200 px-2.5 text-xs text-evvnt-n500"
+                  variant="secondary"
+                  size="sm"
+                  className="h-8 gap-1 px-2.5 text-xs text-evvnt-n500"
                 >
                   <Download className="size-3.5" />
                   Export
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="secondary"
+                  size="sm"
                   onClick={() => setSelectedGroup("VIP")}
                   disabled={selectedCount === 0}
-                  className="inline-flex h-8 items-center gap-1 rounded-evvnt-md border border-evvnt-n200 px-2.5 text-xs text-evvnt-n500 disabled:opacity-40"
+                  className="h-8 gap-1 px-2.5 text-xs text-evvnt-n500 disabled:opacity-40"
                 >
                   <UserPlus className="size-3.5" />
                   Set VIP
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
                   onClick={removeSelected}
                   disabled={selectedCount === 0}
-                  className="inline-flex h-8 items-center gap-1 rounded-evvnt-md border border-evvnt-danger-light px-2.5 text-xs text-evvnt-danger disabled:opacity-40"
+                  variant="secondary"
+                  size="sm"
+                  className="h-8 gap-1 border-evvnt-danger-light px-2.5 text-xs text-evvnt-danger hover:bg-evvnt-danger-light/20 disabled:opacity-40"
                 >
                   Remove
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -388,18 +409,22 @@ export function GuestsPage() {
                       <td className="px-4 py-3 text-xs text-evvnt-n400">{row.invitedAt}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
-                          <button
+                          <Button
                             type="button"
-                            className="rounded-evvnt-sm border border-evvnt-n200 p-1.5 text-evvnt-n400"
+                            variant="secondary"
+                            size="sm"
+                            className="rounded-evvnt-sm p-1.5 text-evvnt-n400"
                           >
                             <Mail className="size-3.5" />
-                          </button>
-                          <button
+                          </Button>
+                          <Button
                             type="button"
-                            className="rounded-evvnt-sm border border-evvnt-n200 p-1.5 text-evvnt-n400"
+                            variant="secondary"
+                            size="sm"
+                            className="rounded-evvnt-sm p-1.5 text-evvnt-n400"
                           >
                             <Ellipsis className="size-3.5" />
-                          </button>
+                          </Button>
                         </div>
                       </td>
                     </tr>
@@ -427,13 +452,14 @@ export function GuestsPage() {
               <GuestDetailRow label="Gift" value="N10,000" />
             </div>
             <div className="border-t border-evvnt-n100 p-4">
-              <button
+              <Button
                 type="button"
-                className="inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-evvnt-md bg-evvnt-core text-xs font-semibold text-white"
+                variant="primary"
+                className="h-9 w-full gap-1.5 text-xs font-semibold"
               >
                 <Bell className="size-3.5" />
                 Send message
-              </button>
+              </Button>
             </div>
           </aside>
         </div>

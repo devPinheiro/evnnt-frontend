@@ -45,7 +45,7 @@ export function SignupPage() {
         },
       });
       toast.success("Account created — verify your email to sign in with password later.");
-      await router.navigate({ to: "/events" });
+      await router.navigate({ to: "/dashboard" });
     } catch (err) {
       toast.error(getApiErrorMessage(err));
     }

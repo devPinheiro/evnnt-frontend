@@ -38,7 +38,7 @@ export function DashboardShell({ sidebar, children, className }: DashboardShellP
         type="button"
         aria-label="Close navigation menu"
         className={cn(
-          "fixed inset-0 z-40 bg-evvnt-ink/50 transition-opacity lg:hidden",
+          "fixed inset-0 z-40 bg-evvnt-ink/40 backdrop-blur-[2px] transition-opacity duration-200 lg:hidden",
           sidebarOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={closeSidebar}

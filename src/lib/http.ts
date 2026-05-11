@@ -27,9 +27,9 @@ function isPublicAuthPath(pathname: string): boolean {
   );
 }
 
-/** Don’t force navigation to `/login` when already on a “safe” route (auth screens or public dashboard). */
+/** Don’t hard-redirect after session loss when already on a safe route (landing, auth screens, public dashboard). */
 function shouldSkipLoginRedirect(pathname: string): boolean {
-  return isPublicAuthPath(pathname) || isDashboardPublicBypassPath(pathname);
+  return pathname === "/" || isPublicAuthPath(pathname) || isDashboardPublicBypassPath(pathname);
 }
 
 function isAuthCredentialsRequest(url: string | undefined): boolean {
@@ -96,7 +96,7 @@ http.interceptors.response.use(
     if (isRefreshRequest(url)) {
       useAuthStore.getState().logout();
       if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
-        window.location.assign("/login");
+        window.location.assign("/");
       }
       return rejectWithEnvelopeOrNetwork(err);
     }
@@ -126,7 +126,7 @@ http.interceptors.response.use(
         } catch {
           useAuthStore.getState().logout();
           if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
-            window.location.assign("/login");
+            window.location.assign("/");
           }
           return rejectWithEnvelopeOrNetwork(err);
         }
@@ -135,7 +135,7 @@ http.interceptors.response.use(
 
     useAuthStore.getState().logout();
     if (typeof window !== "undefined" && !shouldSkipLoginRedirect(window.location.pathname)) {
-      window.location.assign("/login");
+      window.location.assign("/");
     }
 
     if (payload !== undefined && isApiErrorBody(payload)) {

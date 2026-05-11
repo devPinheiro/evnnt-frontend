@@ -11,7 +11,7 @@ export function DashboardContent({ children, className }: DashboardContentProps)
   return (
     <div
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-5 sm:gap-6 sm:px-6 sm:py-6",
+        "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 py-5 sm:gap-6 sm:px-6 sm:py-7",
         "mx-auto w-full max-w-[min(100%,1400px)]",
         className,
       )}

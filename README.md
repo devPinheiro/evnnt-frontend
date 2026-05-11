@@ -2,6 +2,8 @@
 
 **Evvnt** is an event-centric operating system for planners, hosts, corporate teams, and venue stakeholders. It is designed to unify planning, guest operations, ticketing, finance, vendors, gifting, media, and reporting around a single **Event** entity (multi-tenant SaaS). This repository is the **browser client** for Evvnt: dashboards, authenticated workflows, and public/auth routes that talk to the Evvnt API.
 
+
+
 ---
 
 ## Stack
@@ -14,7 +16,7 @@ This project is **`evvnt-frontend`** — a separate directory next to the **`evv
 
 ## Implemented in this UI (moving target)
 
-Authentication (login/signup), the authenticated **app shell** (sidebar + main column), **Events** dashboard entry, **Guest Management** (`/events/guests`), and routes such as **Event Planner** under `/events/planner`. New modules land here first; parity with the PRD is incremental.
+Authentication (login/signup), the authenticated **app shell** (sidebar + main column), **Dashboard** home (`/dashboard`), **My events** (`/events`), **Guest Management** (`/events/guests`), and **Event Planner** (`/events/planner`). New modules land here first; parity with the PRD is incremental.
 
 ---
 
@@ -36,20 +38,20 @@ Open [http://localhost:3000](http://localhost:3000). Point `VITE_API_URL` at the
 
 ## Scripts
 
-| Script              | Description                                |
-| ------------------- | ------------------------------------------ |
-| `npm run dev`       | Vite dev server (port 3000)                |
-| `npm run build`     | Production bundle                          |
-| `npm run preview`   | Serve production build locally (port 3000) |
-| `npm run typecheck` | `tsc --noEmit`                             |
-| `npm run lint`      | Biome check + write                        |
-| `npm run test`      | Vitest (once)                              |
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Vite dev server (port 3000) |
+| `npm run build` | Production bundle |
+| `npm run preview` | Serve production build locally (port 3000) |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run lint` | Biome check + write |
+| `npm run test` | Vitest (once) |
 
 ---
 
 ## Layout
 
-- `src/routes/` — file-based routes (`routeTree.gen.ts` is generated on build/dev). Authenticated UI lives under `routes/(authenticated)/_appLayout/` .
+- `src/routes/` — file-based routes (`routeTree.gen.ts` is generated on build/dev). Authenticated UI lives under `routes/(authenticated)/_appLayout/` (same idea as EHR’s `/(authenticated)/_appLayout`).
 - `src/pages/` — page-level compositions wired from routes.
 - `src/services/` — API calls (Evvnt `{ ok, data }` envelope).
 - `src/store/` — Zustand stores (`evvnt-auth` persisted); import via `@store`.
@@ -63,11 +65,11 @@ Open [http://localhost:3000](http://localhost:3000). Point `VITE_API_URL` at the
 
 Atomic-ish layering: **`ui`** → **`molecules`** → **`organisms`** → **`templates`**.
 
-| Folder                      | Role                                                                                        |
-| --------------------------- | ------------------------------------------------------------------------------------------- |
-| `src/components/ui/`        | Design-system primitives (`Button`, `Card`, `Input`).                                       |
+| Folder | Role |
+| --- | --- |
+| `src/components/ui/` | Design-system primitives (`Button`, `Card`, `Input`). |
 | `src/components/molecules/` | Small composed pieces (e.g. guest list rows, badges, stat cards — see `molecules/guests/`). |
-| `src/components/organisms/` | Feature sections (e.g. `organisms/dashboard/` — sidebar, KPI strip, event cards).           |
-| `src/components/templates/` | App shells (e.g. `EvvntAppLayout` — sidebar + main column, wraps `<Outlet />`).             |
+| `src/components/organisms/` | Feature sections (e.g. `organisms/dashboard/` — sidebar, KPI strip, event cards). |
+| `src/components/templates/` | App shells (e.g. `EvvntAppLayout` — sidebar + main column, wraps `<Outlet />`). |
 
 Path aliases (see `tsconfig.app.json` / `vite.config.ts`): `@ui/*`, `@molecules/*`, `@organisms/*`, `@templates/*`, `@hooks`, `@data`, `@utils`, `@store`, `@types`, `@schemas`.
