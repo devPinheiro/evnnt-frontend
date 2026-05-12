@@ -1,7 +1,8 @@
 import { AppBreadcrumb } from "@molecules/app-breadcrumb";
-import { Bell, Menu, Plus, Search } from "lucide-react";
+import { Bell, Calendar, Menu, Plus, Search } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { Button } from "@ui/button";
 import { cn } from "@utils";
 
 import { useDashboardLayout } from "./dashboard-layout-context";
@@ -16,6 +17,14 @@ type DashboardTopbarProps = {
   className?: string;
 };
 
+function formatTopbarDate(d: Date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(d);
+}
+
 export function DashboardTopbar({
   title,
   subtitle,
@@ -25,39 +34,45 @@ export function DashboardTopbar({
   className,
 }: DashboardTopbarProps) {
   const { openSidebar } = useDashboardLayout();
+  const dateLabel = formatTopbarDate(new Date());
 
   return (
     <header
       className={cn(
-        "flex shrink-0 flex-col gap-3 border-b border-evvnt-n200 bg-white px-4 py-3 shadow-[0_1px_0_rgb(26_9_51_/_4%)] sm:px-6 lg:h-14 lg:flex-row lg:items-center lg:gap-3 lg:py-0",
+        "flex shrink-0 flex-col gap-3 border-b border-evvnt-n200/80 bg-white/95 px-4 py-3 shadow-[0_4px_24px_-16px_rgb(26_9_51_/_10%)] backdrop-blur-[6px] sm:px-6 lg:h-[4.25rem] lg:flex-row lg:items-center lg:gap-4 lg:py-0",
         className,
       )}
     >
-      <div className="flex min-w-0 items-center gap-2 lg:min-w-0 lg:flex-1">
-        <button
-          type="button"
-          className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-evvnt-md border border-evvnt-n200 bg-evvnt-mist text-evvnt-core transition-colors hover:bg-evvnt-tint lg:hidden"
-          aria-label="Open navigation menu"
-          onClick={openSidebar}
-        >
-          <Menu className="size-[18px]" strokeWidth={1.5} />
-        </button>
-        <div className="min-w-0 flex-1">
-          {breadcrumb !== false && (breadcrumb ?? <AppBreadcrumb className="mb-1.5" />)}
-          <h1 className="text-[15px] leading-tight font-semibold tracking-tight text-evvnt-ink sm:text-base">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-evvnt-n500 sm:line-clamp-none sm:text-xs">
-              {subtitle}
-            </p>
-          )}
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5 lg:min-w-0">
+        <div className="flex min-w-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="size-9 shrink-0 p-0 text-evvnt-core hover:bg-evvnt-tint lg:hidden"
+            aria-label="Open navigation menu"
+            onClick={openSidebar}
+          >
+            <Menu className="size-[18px]" strokeWidth={1.5} />
+          </Button>
+          <div className="min-w-0 flex-1">
+            {breadcrumb !== false &&
+              (breadcrumb ?? <AppBreadcrumb className="mb-1 hidden sm:block" />)}
+            <h1 className="text-lg leading-tight font-bold tracking-tight text-evvnt-ink sm:text-xl">
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-evvnt-n500 sm:line-clamp-none sm:text-[13px]">
+                {subtitle}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:justify-end lg:flex-1">
-        <label className="flex min-w-0 flex-1 items-center gap-2 rounded-evvnt-md border border-evvnt-n200 bg-evvnt-mist px-3 py-1.5 lg:max-w-[220px] lg:flex-initial">
-          <Search className="size-[13px] shrink-0 text-evvnt-n400" strokeWidth={1.3} />
+      <div className="flex min-w-0 flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-end lg:max-w-[min(100%,520px)] lg:flex-initial">
+        <label className="flex min-w-0 flex-1 items-center gap-2 rounded-[11px] border border-evvnt-n200 bg-evvnt-canvas-soft px-3 py-2 transition-colors focus-within:border-evvnt-muted focus-within:bg-white focus-within:ring-2 focus-within:ring-evvnt-muted/40 lg:max-w-[260px] lg:flex-initial">
+          <Search className="size-[14px] shrink-0 text-evvnt-n400" strokeWidth={1.3} />
           <input
             type="search"
             placeholder={searchPlaceholder}
@@ -66,32 +81,49 @@ export function DashboardTopbar({
         </label>
 
         <div className="flex shrink-0 items-center justify-end gap-2">
-          <button
+          <Button
             type="button"
-            className="relative flex size-[34px] cursor-pointer items-center justify-center rounded-evvnt-md border border-evvnt-n200 bg-evvnt-mist transition-colors hover:bg-evvnt-tint"
+            variant="secondary"
+            size="sm"
+            className="hidden h-10 gap-2 rounded-[11px] px-3 font-medium text-evvnt-ink sm:inline-flex"
+            aria-label={`Workspace date: ${dateLabel}`}
+          >
+            <Calendar className="size-[15px] text-evvnt-n500" strokeWidth={1.35} />
+            <span className="text-[13px] tabular-nums">{dateLabel}</span>
+          </Button>
+
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="relative size-10 rounded-[11px] p-0 hover:bg-evvnt-tint"
             aria-label="Notifications"
           >
-            <Bell className="size-[14px] text-evvnt-core" strokeWidth={1.2} />
-            <span className="absolute top-[7px] right-[7px] size-1.5 rounded-full border-[1.5px] border-white bg-evvnt-vivid" />
-          </button>
+            <Bell className="size-[15px] text-evvnt-core" strokeWidth={1.2} />
+            <span className="absolute top-2 right-2 size-2 rounded-full border-2 border-white bg-evvnt-vivid" />
+          </Button>
 
-          <button
+          <Button
             type="button"
-            className="flex size-[34px] cursor-pointer items-center justify-center rounded-evvnt-md border border-evvnt-n200 bg-evvnt-mist transition-colors hover:bg-evvnt-tint lg:hidden"
+            variant="secondary"
+            size="sm"
+            className="size-10 rounded-[11px] p-0 hover:bg-evvnt-tint lg:hidden"
             aria-label="Search"
           >
-            <Search className="size-[14px] text-evvnt-core" strokeWidth={1.2} />
-          </button>
+            <Search className="size-[15px] text-evvnt-core" strokeWidth={1.2} />
+          </Button>
 
-          <button
+          <Button
             type="button"
             onClick={onNewEvent}
-            className="flex cursor-pointer items-center gap-1.5 rounded-evvnt-md bg-evvnt-core px-3 py-2 text-[13px] font-medium whitespace-nowrap text-white transition-colors hover:bg-evvnt-deep sm:px-4"
+            variant="primary"
+            size="md"
+            className="h-10 gap-1.5 rounded-[11px] px-4 text-[13px] font-semibold shadow-[0_4px_14px_-4px_rgb(75_31_168_/_35%)]"
           >
-            <Plus className="size-[13px] shrink-0 stroke-[1.5]" />
+            <Plus className="size-[14px] shrink-0 stroke-[1.5]" />
             <span className="hidden min-[380px]:inline">New Event</span>
             <span className="min-[380px]:hidden">New</span>
-          </button>
+          </Button>
         </div>
       </div>
     </header>

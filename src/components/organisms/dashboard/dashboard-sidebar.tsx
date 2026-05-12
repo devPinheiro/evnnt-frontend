@@ -48,13 +48,14 @@ type NavItem = {
 const stroke = "size-[15px] stroke-[1.5]";
 
 function navItemIsActive(item: NavItem, pathname: string): boolean {
-  if (item.to === "/events/") {
+  if (!item.to) return Boolean(item.active);
+  if (item.id === "dashboard") {
+    return pathname === "/dashboard" || pathname === "/dashboard/";
+  }
+  if (item.id === "events") {
     return pathname === "/events" || pathname === "/events/";
   }
-  if (item.to) {
-    return pathname === item.to;
-  }
-  return Boolean(item.active);
+  return pathname === item.to || pathname.startsWith(`${item.to}/`);
 }
 
 function NavIconBox({ children, active }: { children: ReactNode; active?: boolean }) {
@@ -90,9 +91,9 @@ function NavGlyphIcon({ name, active }: { name: NavGlyph; active?: boolean }) {
 }
 
 const workspaceItems: NavItem[] = [
-  { id: "dashboard", label: "Dashboard", glyph: "dashboard", to: "/events/" },
+  { id: "dashboard", label: "Dashboard", glyph: "dashboard", to: "/dashboard" },
   { id: "planner", label: "Planner", glyph: "planner", to: "/events/planner" },
-  { id: "events", label: "My Events", glyph: "events", badge: "5" },
+  { id: "events", label: "My Events", glyph: "events", badge: "5", to: "/events" },
   { id: "analytics", label: "Analytics", glyph: "analytics", badge: "v1.1" },
 ];
 
@@ -116,8 +117,9 @@ function NavRow({ item }: { item: NavItem }) {
   const { closeSidebar } = useDashboardLayout();
 
   const className = cn(
-    "relative mb-px flex w-full cursor-pointer items-center gap-[9px] rounded-evvnt-md px-2.5 py-2 text-left transition-colors",
-    "hover:bg-white/6",
+    "relative mb-px flex w-full items-center gap-[9px] rounded-evvnt-md px-2.5 py-2 text-left transition-colors",
+    "focus-visible:ring-2 focus-visible:ring-evvnt-vivid/60 focus-visible:ring-offset-2 focus-visible:ring-offset-evvnt-ink focus-visible:outline-none",
+    item.to ? "cursor-pointer hover:bg-white/6" : "cursor-default opacity-55",
     isActive && "bg-[rgb(124_58_237_/_22%)]",
   );
 
@@ -127,12 +129,7 @@ function NavRow({ item }: { item: NavItem }) {
         <span className="absolute top-1/2 left-0 h-[18px] w-[3px] -translate-y-1/2 rounded-r-sm bg-evvnt-vivid" />
       )}
       <NavGlyphIcon name={item.glyph} active={isActive} />
-      <span
-        className={cn(
-          "text-[13px] font-normal text-white/50",
-          isActive && "font-medium text-white",
-        )}
-      >
+      <span className={cn("text-[13px] font-medium text-white/65", isActive && "text-white")}>
         {item.label}
       </span>
       {item.badge && (
@@ -158,9 +155,9 @@ function NavRow({ item }: { item: NavItem }) {
   }
 
   return (
-    <button type="button" className={className}>
+    <div className={className} aria-disabled>
       {inner}
-    </button>
+    </div>
   );
 }
 
@@ -246,7 +243,10 @@ export function DashboardSidebar({
       </nav>
 
       <div className="shrink-0 border-t border-white/7 px-4 py-3">
-        <button type="button" className="flex w-full cursor-pointer items-center gap-2.5 text-left">
+        <button
+          type="button"
+          className="flex w-full cursor-pointer items-center gap-2.5 rounded-evvnt-md p-2 text-left transition-colors hover:bg-white/6 focus-visible:ring-2 focus-visible:ring-evvnt-vivid/60 focus-visible:ring-offset-2 focus-visible:ring-offset-evvnt-ink focus-visible:outline-none"
+        >
           <div className="flex size-[30px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-evvnt-deep to-evvnt-vivid text-[10px] font-bold text-white">
             {userInitials}
           </div>

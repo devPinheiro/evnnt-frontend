@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { Button } from "@ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@ui/tabs";
 import { cn } from "@utils";
 
 import type { EventCardProps } from "./event-card";
@@ -21,37 +23,54 @@ export function EventsSection({ events, totalLabel, onNewEvent }: EventsSectionP
     <section className="min-w-0">
       <div className="mb-4 flex shrink-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <h2 className="text-base font-semibold tracking-tight text-evvnt-ink">My events</h2>
+          <h2 className="text-[17px] font-bold tracking-tight text-evvnt-ink">My events</h2>
           {totalLabel && <p className="mt-0.5 text-[11px] text-evvnt-n500">{totalLabel}</p>}
         </div>
-        <div className="flex min-w-0 flex-col gap-2.5 sm:items-end">
-          <div className="-mx-1 flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden">
+        <Tabs
+          value={tab}
+          onValueChange={(v) => setTab(v as (typeof tabs)[number])}
+          className="flex min-w-0 flex-col gap-2.5 sm:items-end"
+        >
+          <TabsList className="h-auto w-full justify-start gap-0.5 overflow-x-auto rounded-[11px] border border-evvnt-n200/70 bg-evvnt-n50/90 p-0.5 [scrollbar-width:none] sm:w-auto sm:justify-end [&::-webkit-scrollbar]:hidden">
             {tabs.map((t) => (
-              <button
+              <TabsTrigger
                 key={t}
-                type="button"
-                onClick={() => setTab(t)}
+                value={t}
                 className={cn(
-                  "shrink-0 cursor-pointer rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
-                  tab === t
-                    ? "border-evvnt-muted bg-evvnt-tint text-evvnt-core shadow-sm"
-                    : "border-transparent text-evvnt-n500 hover:bg-evvnt-n50",
+                  "h-auto shrink-0 rounded-[9px] border border-transparent px-3 py-1.5 text-xs font-semibold shadow-none",
+                  "data-[state=active]:border-evvnt-n300 data-[state=active]:bg-white data-[state=active]:text-evvnt-core data-[state=active]:shadow-sm",
+                  "data-[state=inactive]:text-evvnt-n500 data-[state=inactive]:hover:bg-white/70",
                 )}
               >
                 {t}
-              </button>
+              </TabsTrigger>
             ))}
-          </div>
-          <button
+          </TabsList>
+          <Button
             type="button"
-            className="w-fit cursor-pointer self-end text-xs font-medium text-evvnt-vivid transition-colors hover:text-evvnt-core sm:self-auto"
+            variant="ghost"
+            size="sm"
+            className="!h-auto w-fit self-end !bg-transparent !px-0 !py-0 text-xs font-medium text-evvnt-vivid hover:text-evvnt-core sm:self-auto"
           >
             Manage all →
-          </button>
-        </div>
+          </Button>
+        </Tabs>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
+        {events.length === 0 && (
+          <div className="flex min-h-[11rem] flex-col justify-center rounded-[20px] border border-black/[0.08] bg-white p-6 shadow-[0_1px_2px_rgb(0_0_0_/_4%),0_4px_12px_rgb(0_0_0_/_4%)] sm:col-span-2 xl:col-span-2">
+            <div className="text-sm font-semibold text-evvnt-ink">No events yet</div>
+            <div className="mt-1 text-[11px] leading-relaxed text-evvnt-n500">
+              Create your first event to start managing guests, tickets, gifting, and vendors.
+            </div>
+            <div className="mt-3">
+              <Button type="button" variant="primary" size="sm" onClick={onNewEvent}>
+                Create event
+              </Button>
+            </div>
+          </div>
+        )}
         {events.map((ev, i) => (
           <EventCard key={`${ev.title}-${i}`} {...ev} />
         ))}

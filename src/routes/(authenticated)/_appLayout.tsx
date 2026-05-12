@@ -7,7 +7,7 @@ export const Route = createFileRoute("/(authenticated)/_appLayout")({
   beforeLoad: ({ context }) => {
     if (isDashboardPublicMode()) return;
     if (!context.auth.isLoggedIn) {
-      throw redirect({ to: "/login", replace: true });
+      throw redirect({ to: "/", replace: true });
     }
   },
   component: AuthenticatedLayout,

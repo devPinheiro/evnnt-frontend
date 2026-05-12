@@ -12,6 +12,7 @@ import { Fragment, useMemo } from "react";
 import { cn } from "@utils";
 
 const SEGMENT_LABELS: Record<string, string> = {
+  dashboard: "Dashboard",
   events: "Events",
   planner: "Planner",
   login: "Sign in",

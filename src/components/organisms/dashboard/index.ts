@@ -6,6 +6,7 @@ export { DashboardLayoutProvider } from "./dashboard-layout-context";
 export { AttentionStrip, type AttentionItem } from "./attention-strip";
 export { DashboardContent } from "./dashboard-content";
 export { DashboardPageSkeleton } from "./dashboard-page-skeleton";
+export { EventsPageSkeleton } from "./events-page-skeleton";
 export { DashboardMain } from "./dashboard-main";
 export { DashboardShell } from "./dashboard-shell";
 export { DashboardSidebar } from "./dashboard-sidebar";
@@ -18,6 +19,12 @@ export {
 } from "./event-card";
 export { EventsSection } from "./events-section";
 export { KpiStrip, type KpiAccent, type KpiItem } from "./kpi-strip";
+export {
+  OverviewChartCard,
+  type OverviewChartPoint,
+  type OverviewRangeConfig,
+  type OverviewTimeRange,
+} from "./overview-chart-card";
 export { NewEventCard } from "./new-event-card";
 export { PlanWidget } from "./plan-widget";
 export { QuickActions } from "./quick-actions";

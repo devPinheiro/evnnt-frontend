@@ -28,6 +28,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@ui/breadcrumb";
+import { Button } from "@ui/button";
 import { cn } from "@utils";
 import { Calendar, Check, Download, LayoutGrid, Save } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
@@ -266,20 +267,24 @@ export function EventPlannerPage() {
             <Check className="size-2.5" strokeWidth={2} />
             Saved
           </span>
-          <button
+          <Button
             type="button"
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-evvnt-md border border-evvnt-muted px-3.5 py-2 text-[13px] font-medium text-evvnt-core transition-colors hover:bg-evvnt-tint"
+            variant="secondary"
+            size="md"
+            className="gap-1.5 border-evvnt-muted px-3.5 py-2 text-[13px] font-medium text-evvnt-core hover:bg-evvnt-tint"
           >
             <Download className="size-[13px]" strokeWidth={1.3} />
             Export PDF
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-evvnt-md bg-evvnt-core px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-evvnt-deep"
+            variant="primary"
+            size="md"
+            className="gap-1.5 px-4 py-2 text-[13px] font-medium"
           >
             <Save className="size-[13px]" strokeWidth={1.2} />
             Save to event
-          </button>
+          </Button>
         </div>
       </header>
 

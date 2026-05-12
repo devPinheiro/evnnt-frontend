@@ -1,9 +1,13 @@
-import { Check, Gift, LineChart, Mail, Ticket, Wallet } from "lucide-react";
+import { CalendarDays, Check, Gift, LineChart, Mail, Ticket, Users, Wallet } from "lucide-react";
 
 import type { ActivityRow } from "@organisms/dashboard/activity-feed";
 import type { AttentionItem } from "@organisms/dashboard/attention-strip";
 import type { EventCardProps } from "@organisms/dashboard/event-card";
 import type { KpiItem } from "@organisms/dashboard/kpi-strip";
+import type {
+  OverviewRangeConfig,
+  OverviewTimeRange,
+} from "@organisms/dashboard/overview-chart-card";
 
 export const demoKpiItems: KpiItem[] = [
   {
@@ -11,83 +15,153 @@ export const demoKpiItems: KpiItem[] = [
     label: "Active events",
     value: "3",
     bar: "purple",
+    icon: <CalendarDays className="size-[15px]" strokeWidth={1.35} />,
     delta: (
       <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> of 5 allowed</span>
+        <span className="font-semibold text-evvnt-success">+2</span>
+        <span className="text-evvnt-n400"> vs last month</span>
       </>
     ),
-    target: "Target: 500 platform-wide",
   },
   {
     id: "gmv",
     label: "Tickets GMV",
     value: "₦6.4M",
     bar: "vivid",
+    icon: <Ticket className="size-[15px]" strokeWidth={1.35} />,
     delta: (
       <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> 22% this month</span>
+        <span className="font-semibold text-evvnt-success">+22%</span>
+        <span className="text-evvnt-n400"> this month</span>
       </>
     ),
-    target: "Platform target ₦50M",
   },
   {
     id: "gift",
     label: "Gift volume",
     value: "₦940K",
     bar: "success",
+    icon: <Gift className="size-[15px]" strokeWidth={1.35} />,
     delta: (
       <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> 3 pending payouts</span>
+        <span className="font-semibold text-evvnt-success">+8%</span>
+        <span className="text-evvnt-n400"> vs last month</span>
       </>
     ),
-    target: "Platform target ₦20M",
   },
   {
     id: "rsvp",
-    label: "RSVP conversion",
+    label: "RSVP rate",
     value: "68%",
     bar: "warn",
     accent: false,
+    icon: <Users className="size-[15px]" strokeWidth={1.35} />,
     delta: (
       <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> above 60% target</span>
+        <span className="font-semibold text-evvnt-danger">−1.5%</span>
+        <span className="text-evvnt-n400"> vs target 70%</span>
       </>
     ),
-    target: "Target: > 60%",
-  },
-  {
-    id: "vendor",
-    label: "Vendor via Evvnt Pay",
-    value: "44%",
-    bar: "soft",
-    accent: false,
-    delta: (
-      <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> above 40% target</span>
-      </>
-    ),
-    target: "Target: > 40%",
-  },
-  {
-    id: "nps",
-    label: "NPS score",
-    value: "62",
-    bar: "deep",
-    accent: false,
-    delta: (
-      <>
-        <span className="text-evvnt-success">↑</span>
-        <span className="text-evvnt-n400"> above 50 target</span>
-      </>
-    ),
-    target: "Target: > 50",
   },
 ];
+
+export const demoWorkspaceOverviewByRange: Record<OverviewTimeRange, OverviewRangeConfig> = {
+  "1d": {
+    headline: "₦420K",
+    subline: (
+      <>
+        <span className="text-evvnt-n500">Today · </span>
+        <span className="font-semibold text-evvnt-success">+5.2%</span>
+        <span className="text-evvnt-n500"> vs yesterday</span>
+      </>
+    ),
+    points: [
+      { label: "6a", primary: 12, secondary: 8 },
+      { label: "9a", primary: 28, secondary: 18 },
+      { label: "12p", primary: 44, secondary: 32 },
+      { label: "3p", primary: 52, secondary: 38 },
+      { label: "6p", primary: 68, secondary: 45 },
+      { label: "9p", primary: 74, secondary: 52 },
+    ],
+  },
+  "7d": {
+    headline: "₦2.1M",
+    subline: (
+      <>
+        <span className="text-evvnt-n500">Last 7 days · </span>
+        <span className="font-semibold text-evvnt-success">+12%</span>
+        <span className="text-evvnt-n500"> vs prior week</span>
+      </>
+    ),
+    points: [
+      { label: "Mon", primary: 38, secondary: 28 },
+      { label: "Tue", primary: 42, secondary: 31 },
+      { label: "Wed", primary: 36, secondary: 29 },
+      { label: "Thu", primary: 55, secondary: 40 },
+      { label: "Fri", primary: 62, secondary: 48 },
+      { label: "Sat", primary: 78, secondary: 58 },
+      { label: "Sun", primary: 65, secondary: 50 },
+    ],
+  },
+  "30d": {
+    headline: "₦6.4M",
+    subline: (
+      <>
+        <span className="text-evvnt-n500">Last 30 days · </span>
+        <span className="font-semibold text-evvnt-success">+18%</span>
+        <span className="text-evvnt-n500"> vs prior month</span>
+      </>
+    ),
+    points: [
+      { label: "W1", primary: 40, secondary: 32 },
+      { label: "W2", primary: 52, secondary: 38 },
+      { label: "W3", primary: 48, secondary: 41 },
+      { label: "W4", primary: 70, secondary: 55 },
+    ],
+  },
+  "6m": {
+    headline: "₦28.2M",
+    subline: (
+      <>
+        <span className="text-evvnt-n500">6 months · </span>
+        <span className="font-semibold text-evvnt-success">+9%</span>
+        <span className="text-evvnt-n500"> vs prior half</span>
+      </>
+    ),
+    points: [
+      { label: "Jan", primary: 42, secondary: 30 },
+      { label: "Feb", primary: 48, secondary: 35 },
+      { label: "Mar", primary: 44, secondary: 33 },
+      { label: "Apr", primary: 58, secondary: 42 },
+      { label: "May", primary: 62, secondary: 46 },
+      { label: "Jun", primary: 74, secondary: 55 },
+    ],
+  },
+  max: {
+    headline: "₦84.5M",
+    subline: (
+      <>
+        <span className="text-evvnt-n500">All time · </span>
+        <span className="font-semibold text-evvnt-success">+2.5%</span>
+        <span className="text-evvnt-n500"> YoY</span>
+      </>
+    ),
+    points: [
+      { label: "Jan", primary: 32, secondary: 22 },
+      { label: "Feb", primary: 38, secondary: 26 },
+      { label: "Mar", primary: 41, secondary: 28 },
+      { label: "Apr", primary: 45, secondary: 31 },
+      { label: "May", primary: 52, secondary: 36 },
+      { label: "Jun", primary: 58, secondary: 40 },
+      { label: "Jul", primary: 55, secondary: 38 },
+      { label: "Aug", primary: 62, secondary: 44 },
+      { label: "Sep", primary: 68, secondary: 48 },
+      { label: "Oct", primary: 72, secondary: 52 },
+      { label: "Nov", primary: 76, secondary: 56 },
+      { label: "Dec", primary: 80, secondary: 60 },
+    ],
+  },
+};
 
 export const demoAttentionItems: AttentionItem[] = [
   {

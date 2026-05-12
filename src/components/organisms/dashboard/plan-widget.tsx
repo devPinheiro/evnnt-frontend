@@ -24,7 +24,7 @@ export function PlanWidget({
 }: PlanWidgetProps) {
   return (
     <div
-      className="relative shrink-0 overflow-hidden rounded-evvnt-2xl p-4 shadow-[0_4px_20px_-6px_rgb(45_15_107_/_35%)]"
+      className="relative shrink-0 overflow-hidden rounded-[14px] border border-white/10 p-4 shadow-[0_8px_32px_-10px_rgb(45_15_107_/_38%)]"
       style={{ backgroundImage: "var(--background-image-evvnt-plan)" }}
     >
       <div
@@ -70,7 +70,7 @@ export function PlanWidget({
         <button
           type="button"
           onClick={onUpgrade}
-          className="mt-2.5 flex w-full cursor-pointer items-center justify-center gap-1 rounded-evvnt-sm border border-white/20 bg-white/15 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/25"
+          className="mt-2.5 flex w-full cursor-pointer items-center justify-center gap-1 rounded-evvnt-sm border border-white/20 bg-white/15 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none"
         >
           {upgradeLabel}
           <ArrowRight className="size-3" strokeWidth={1.3} />

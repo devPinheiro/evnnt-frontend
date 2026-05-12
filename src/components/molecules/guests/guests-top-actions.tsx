@@ -1,5 +1,7 @@
 import { Plus, Search, Upload } from "lucide-react";
 
+import { Button } from "@ui/button";
+
 export type GuestsTopActionsProps = {
   searchPlaceholder?: string;
   searchValue?: string;
@@ -26,22 +28,26 @@ export function GuestsTopActions({
           onChange={(e) => onSearchValueChange?.(e.target.value)}
         />
       </div>
-      <button
+      <Button
         type="button"
+        variant="secondary"
+        size="sm"
         onClick={onImportClick}
-        className="inline-flex h-9 items-center gap-1.5 rounded-evvnt-md border border-evvnt-n200 bg-white px-3 text-xs text-evvnt-n500"
+        className="h-9 gap-1.5 px-3 text-xs text-evvnt-n500"
       >
         <Upload className="size-3.5" />
         Import
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
+        variant="primary"
+        size="sm"
         onClick={onAddGuestClick}
-        className="inline-flex h-9 items-center gap-1.5 rounded-evvnt-md bg-evvnt-core px-3 text-xs font-semibold text-white"
+        className="h-9 gap-1.5 px-3 text-xs font-semibold"
       >
         <Plus className="size-3.5" />
         Add Guest
-      </button>
+      </Button>
     </div>
   );
 }

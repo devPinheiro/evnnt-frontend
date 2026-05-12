@@ -11,6 +11,8 @@
   --color-evvnt-muted: #c4b5fd;
   --color-evvnt-tint: #ede9fe;
   --color-evvnt-mist: #f5f3ff;
+  /** Main app column canvas — cooler off-white (dashboard soft UI). */
+  --color-evvnt-canvas-soft: #f8f9fb;
 
   /* Neutrals (design n50–n700) */
   --color-evvnt-n50: #f9fafb;

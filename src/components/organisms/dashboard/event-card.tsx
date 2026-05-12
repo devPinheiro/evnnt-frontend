@@ -1,4 +1,4 @@
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, ChevronRight, MapPin } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
 import type { EvvntBannerKey } from "@data/evvnt-banners";
@@ -31,25 +31,20 @@ export type EventCardProps = {
   footerExtra?: ReactNode;
 };
 
-const pillClass: Record<EventStatusPill, string> = {
-  live: "bg-[rgb(5_150_105_/_90%)] text-white",
-  upcoming: "bg-[rgb(75_31_168_/_85%)] text-white",
-  draft: "bg-black/50 text-white/70",
-  ended: "bg-[rgb(107_114_128_/_70%)] text-white",
+/** Frosted capsule — semantic text on light blur (Apple-style label). */
+const statusTone: Record<EventStatusPill, string> = {
+  live: "text-evvnt-success",
+  upcoming: "text-evvnt-core",
+  draft: "text-evvnt-n600",
+  ended: "text-evvnt-n500",
 };
 
 const pillLabel: Record<EventStatusPill, string> = {
-  live: "● Live",
+  live: "Live",
   upcoming: "Upcoming",
   draft: "Draft",
   ended: "Ended",
 };
-
-const accessClass = {
-  public: "bg-evvnt-success-subtle text-evvnt-success",
-  private: "bg-evvnt-tint text-evvnt-core",
-  password: "bg-evvnt-warn-subtle text-evvnt-warn",
-} as const;
 
 export function EventCard({
   title,
@@ -71,70 +66,101 @@ export function EventCard({
   return (
     <article
       className={cn(
-        "flex cursor-pointer flex-col overflow-hidden rounded-evvnt-card border border-evvnt-n200 bg-white shadow-[0_1px_3px_rgb(26_9_51_/_6%)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-8px_rgb(26_9_51_/_14%)]",
-        featured &&
-          "border-evvnt-muted ring-1 ring-evvnt-muted/40 shadow-[0_4px_14px_-4px_rgb(26_9_51_/_12%)]",
-        dimmed && "opacity-75",
+        "group/card relative flex cursor-pointer flex-col overflow-hidden rounded-[20px]",
+        "border border-black/[0.08] bg-white shadow-[0_1px_2px_rgb(0_0_0_/_4%),0_4px_12px_rgb(0_0_0_/_4%)]",
+        "transition-[box-shadow,border-color] duration-200 ease-out",
+        "hover:border-black/[0.12] hover:shadow-[0_2px_4px_rgb(0_0_0_/_5%),0_8px_24px_rgb(0_0_0_/_6%)]",
+        featured && "ring-1 ring-black/[0.06]",
+        dimmed && "opacity-[0.78] saturate-[0.85]",
       )}
     >
-      <div className="relative flex h-20 items-end bg-evvnt-ink px-3 pb-2.5" style={bg}>
+      <div className={cn("relative h-[8rem] shrink-0 overflow-hidden sm:h-[8.5rem]")} style={bg}>
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-black/45 from-0% to-transparent to-60%"
+          className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
         />
-        <span
-          className={cn(
-            "absolute top-2.5 right-2.5 z-[2] rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wide uppercase",
-            pillClass[status],
-          )}
-        >
-          {pillLabel[status]}
-        </span>
-        <div className="relative z-[2] text-[13px] leading-tight font-bold text-white">{title}</div>
-      </div>
-
-      <div className="flex flex-1 flex-col gap-1.5 px-3.5 py-2.5">
-        <div className="flex items-center gap-1.5">
-          <span className="text-[9px] font-semibold tracking-wider text-evvnt-n400 uppercase">
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3 sm:p-3.5">
+          <span className="max-w-[58%] truncate rounded-full border border-white/35 bg-white/55 px-2.5 py-1 text-[11px] font-medium text-evvnt-ink/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/45">
             {typeLabel}
           </span>
           <span
             className={cn(
-              "rounded-full px-1.5 py-px text-[9px] font-medium",
-              accessClass[accessVariant],
+              "shrink-0 rounded-full border border-white/35 bg-white/55 px-2.5 py-1 text-[11px] font-semibold backdrop-blur-xl supports-[backdrop-filter]:bg-white/45",
+              statusTone[status],
             )}
           >
-            {accessLabel}
+            {status === "live" ? "● " : ""}
+            {pillLabel[status]}
           </span>
-        </div>
-        <div className="flex items-center gap-1 text-[11px] text-evvnt-n500">
-          <Calendar className="size-[11px] shrink-0 text-evvnt-n400" strokeWidth={1} />
-          {dateLine}
-        </div>
-        <div className="flex items-center gap-1 overflow-hidden text-[11px] text-evvnt-n500">
-          <MapPin className="size-[11px] shrink-0 text-evvnt-n400" strokeWidth={1} />
-          <span className="truncate">{locationLine}</span>
         </div>
       </div>
 
-      <div className="mt-1 flex gap-0 border-t border-evvnt-n100">
-        {metrics.map((m, i) => (
-          <div
-            key={`${m.label}-${i}`}
-            className={cn(
-              "flex min-w-0 flex-col items-center justify-center border-r border-evvnt-n100 py-2 last:border-r-0",
-              m.span === 2 ? "min-w-0 flex-[2]" : "flex-1",
-            )}
-          >
-            <div
-              className={cn("text-[13px] font-bold text-evvnt-ink", m.accent && "text-evvnt-core")}
-            >
-              {m.value}
-            </div>
-            <div className="mt-0.5 text-center text-[9px] text-evvnt-n400">{m.label}</div>
+      <div className="flex min-h-0 flex-1 flex-col px-4 pb-4 pt-4 sm:px-5 sm:pb-5 sm:pt-4">
+        {featured && <p className="mb-1 text-[11px] font-medium text-evvnt-core/90">Featured</p>}
+        <h3 className="line-clamp-2 text-[17px] leading-snug font-semibold tracking-[-0.015em] text-evvnt-ink">
+          {title}
+        </h3>
+
+        <p
+          className={cn(
+            "mt-2 rounded-lg bg-evvnt-n100/90 px-2.5 py-1.5 text-[13px] leading-snug text-evvnt-n600",
+            accessVariant === "password" && "text-evvnt-warn",
+          )}
+        >
+          {accessLabel}
+        </p>
+
+        <div className="mt-4 space-y-0 rounded-xl bg-evvnt-n50/80 ring-1 ring-black/[0.05]">
+          <div className="flex items-center gap-3 border-black/[0.06] border-b px-3 py-2.5 sm:px-3.5">
+            <Calendar className="size-[15px] shrink-0 text-evvnt-n400" strokeWidth={1.5} />
+            <span className="min-w-0 text-[13px] leading-snug text-evvnt-n700">{dateLine}</span>
           </div>
-        ))}
+          <div className="flex items-center gap-3 px-3 py-2.5 sm:px-3.5">
+            <MapPin className="size-[15px] shrink-0 text-evvnt-n400" strokeWidth={1.5} />
+            <span className="min-w-0 text-[13px] leading-snug text-evvnt-n700">{locationLine}</span>
+          </div>
+        </div>
+
+        {/* Hairline-separated metric cells (grouped list / Settings-row feel) */}
+        <div
+          className={cn(
+            "mt-4 grid gap-px overflow-hidden rounded-xl bg-black/[0.07] p-px",
+            metrics.some((m) => m.span === 2) ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4",
+          )}
+        >
+          {metrics.map((m, i) => (
+            <div
+              key={`${m.label}-${i}`}
+              className={cn(
+                "flex min-w-0 flex-col justify-center bg-evvnt-n50/90 px-2 py-3 text-center sm:px-1",
+                m.span === 2 && "col-span-2",
+              )}
+            >
+              <div
+                className={cn(
+                  "text-[15px] leading-tight font-semibold tabular-nums tracking-[-0.02em] text-evvnt-ink",
+                  m.accent && "text-evvnt-core",
+                )}
+              >
+                {m.value}
+              </div>
+              {m.label ? (
+                <div className="mt-0.5 text-[11px] leading-snug font-normal text-evvnt-n500">
+                  {m.label}
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 flex items-center justify-end border-black/[0.06] border-t pt-3">
+          <span className="inline-flex items-center gap-0.5 text-[13px] font-medium text-evvnt-n500 transition-colors group-hover/card:text-evvnt-core">
+            View
+            <ChevronRight className="size-4 opacity-70" strokeWidth={1.75} />
+          </span>
+        </div>
       </div>
+
       {footerExtra}
     </article>
   );

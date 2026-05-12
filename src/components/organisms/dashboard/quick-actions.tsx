@@ -33,12 +33,12 @@ export function QuickActions({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-evvnt-2xl border border-evvnt-n200 bg-white shadow-[0_1px_2px_rgb(26_9_51_/_5%)]",
+        "flex flex-col overflow-hidden rounded-[14px] border border-evvnt-n200/90 bg-white shadow-[0_4px_22px_-12px_rgb(26_9_51_/_10%)]",
         className,
       )}
     >
-      <div className="border-b border-evvnt-n100 bg-evvnt-n50/40 px-4 py-3.5 pb-3">
-        <div className="text-[13px] font-semibold tracking-tight text-evvnt-ink">Quick actions</div>
+      <div className="border-b border-evvnt-n100 bg-evvnt-n50/50 px-4 py-3.5 pb-3">
+        <div className="text-[13px] font-bold tracking-tight text-evvnt-ink">Quick actions</div>
       </div>
       <div className="grid grid-cols-2 gap-2 p-3 sm:gap-2.5">
         {actions.map((a) => (
@@ -48,7 +48,7 @@ export function QuickActions({ className }: { className?: string }) {
             onClick={() => {
               void navigate({ to: "/events" });
             }}
-            className="flex cursor-pointer flex-col gap-1.5 rounded-evvnt-lg border border-evvnt-n200 bg-evvnt-mist p-3 text-left transition-all hover:border-evvnt-muted hover:bg-evvnt-tint hover:shadow-sm active:scale-[0.99]"
+            className="flex cursor-pointer flex-col gap-1.5 rounded-[12px] border border-evvnt-n200/90 bg-evvnt-canvas-soft p-3 text-left transition-all hover:border-evvnt-n300 hover:bg-white hover:shadow-[0_8px_20px_-12px_rgb(26_9_51_/_14%)] focus-visible:ring-2 focus-visible:ring-evvnt-muted focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <div
               className={cn("flex size-7 items-center justify-center rounded-evvnt-sm", a.iconBg)}
